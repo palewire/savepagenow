@@ -23,7 +23,7 @@ def capture(target_url):
     # Determine if the response was cached
     cached = response.headers['X-Page-Cache'] == 'HIT'
     if cached:
-        print "Cached URL returned"
+        print("Cached URL returned")
 
     # Return that
     return archive_url
