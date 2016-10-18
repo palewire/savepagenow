@@ -20,5 +20,8 @@ def capture(target_url):
     archive_id = response.headers['Content-Location']
     archive_url = urljoin(domain, archive_id)
 
+    # Determine if the response was cached
+    cached = response.headers['X-Page-Cache'] == 'HIT'
+
     # Return that
     return archive_url
