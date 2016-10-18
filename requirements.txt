@@ -1,0 +1,7 @@
+six
+requests
+
+flake8
+coverage
+coveralls
+twine
