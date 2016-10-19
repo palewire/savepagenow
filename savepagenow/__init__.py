@@ -170,13 +170,3 @@ def capture_or_cache(
         return capture(target_url, user_agent=user_agent, accept_cache=False), True
     except CachedPage:
         return capture(target_url, user_agent=user_agent, accept_cache=True), False
-
-
-def capture_or_cache(
-    target_url,
-    user_agent="savepagenow (https://github.com/pastpages/savepagenow)"
-):
-    try:
-        return capture(target_url, user_agent=user_agent, accept_cache=False), True
-    except CachedPage:
-        return capture(target_url, user_agent=user_agent, accept_cache=True), False
