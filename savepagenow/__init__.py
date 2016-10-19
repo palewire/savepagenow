@@ -6,7 +6,7 @@ from six.moves.urllib.parse import urljoin
 def capture(
     target_url,
     user_agent="savepagenow (https://github.com/pastpages/savepagenow)",
-    return_cache=False
+    accept_cache=False
 ):
     """
     Archives the provided URL using archive.org's Wayback Machine.
@@ -31,21 +31,20 @@ def capture(
     # Determine if the response was cached
     cached = response.headers['X-Page-Cache'] == 'HIT'
     if cached:
-        if return_cache:
-            pass
-        else:
-            raise CachedPage("archive.org returned a cached version of this page")
+        if not accept_cache:
+            raise CachedPage("archive.org returned a cached version of this page: {}".format(
+                archive_url
+            ))
 
     # Return that
     return archive_url
 
 
-def capture_or_return_cache(
+def capture_or_cache(
     target_url,
     user_agent="savepagenow (https://github.com/pastpages/savepagenow)"
 ):
-    kwargs = dict(user_agent=user_agent, return_cache=True)
     try:
-        return capture(target_url, **kwargs), False
+        return capture(target_url, user_agent=user_agent, accept_cache=False), True
     except CachedPage:
-        return capture(target_url, **kwargs), True
+        return capture(target_url, user_agent=user_agent, accept_cache=True), False
