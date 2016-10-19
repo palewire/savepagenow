@@ -38,45 +38,44 @@ def capture_web_archive_org(target_url):
     return archive_url
 
 
-def random_email():
-    """
-    Helper function for capture_webcitation
-
-    Webcitation requires you to include an email address when submitting
-
-    They do not check if it is valid
-    """
-    import random
-    from six.moves import range
-    alpha = "abcdefghijklmnopqrstuvwxyz"
-    choices = alpha + "0123456789"
-    domain = [".com", ".org", ".edu", ".co.uk", ".net"][random.randint(0, 4)]
-    text = []
-
-    # build the user portion of the email
-    for i in range(0, random.randint(2, 4)):
-        # need 2-4 individual chunks with length between 1-3 characters
-        for j in range(0, random.randint(1, 3)):
-            text.append(choices[random.randint(0, len(choices) - 1)])
-
-    text.append('@')
-
-    # build the email host
-    for i in range(0, random.randint(2, 3)):
-        for j in range(0, random.randint(1, 3)):
-            text.append(alpha[random.randint(0, len(alpha) - 1)])
-
-    text.append(domain)
-
-    return ''.join(text)
-
-
 def capture_webcitation(target_url):
     """
     Archives the provided URL using webcitation.org's submission form
 
     Returns the archive.is URL where the capture is stored.
     """
+
+    def random_email():
+        """
+        Helper function for capture_webcitation
+
+        Webcitation requires you to include an email address when submitting
+
+        They do not check if it is valid
+        """
+        import random
+        from six.moves import range
+        alpha = "abcdefghijklmnopqrstuvwxyz"
+        choices = alpha + "0123456789"
+        domain = [".com", ".org", ".edu", ".co.uk", ".net"][random.randint(0, 4)]
+        text = []
+
+        # build the user portion of the email
+        for i in range(0, random.randint(2, 4)):
+            # need 2-4 individual chunks with length between 1-3 characters
+            for j in range(0, random.randint(1, 3)):
+                text.append(choices[random.randint(0, len(choices) - 1)])
+
+        text.append('@')
+
+        # build the email host
+        for i in range(0, random.randint(2, 3)):
+            for j in range(0, random.randint(1, 3)):
+                text.append(alpha[random.randint(0, len(alpha) - 1)])
+
+        text.append(domain)
+
+        return ''.join(text)
 
     # Put together the URL that will save our request
     domain = "http://www.webcitation.org"
