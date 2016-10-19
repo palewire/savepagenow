@@ -57,7 +57,7 @@ def capture_webcitation(target_url):
         from six.moves import range
         alpha = "abcdefghijklmnopqrstuvwxyz"
         choices = alpha + "0123456789"
-        domain = [".com", ".org", ".edu", ".co.uk", ".net"][random.randint(0, 4)]
+        domains = [".com", ".org", ".edu", ".co.uk", ".net"]
         text = []
 
         # build the user portion of the email
@@ -73,7 +73,7 @@ def capture_webcitation(target_url):
             for j in range(0, random.randint(1, 3)):
                 text.append(alpha[random.randint(0, len(alpha) - 1)])
 
-        text.append(domain)
+        text.append(domains[random.randint(0, 4)])
 
         return ''.join(text)
 
