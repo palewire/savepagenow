@@ -2,7 +2,10 @@ import requests
 from six.moves.urllib.parse import urljoin
 
 
-def capture(target_url):
+def capture(
+    target_url,
+    user_agent="savepagenow (https://github.com/pastpages/savepagenow)"
+):
     """
     Archives the provided URL using archive.org's Wayback Machine.
 
@@ -14,7 +17,10 @@ def capture(target_url):
     request_url = save_url + target_url
 
     # Send the capture request to achive.org
-    response = requests.get(request_url)
+    headers = {
+        'User-Agent': user_agent,
+    }
+    response = requests.get(request_url, headers=headers)
 
     # Put together the URL where this page is archived
     archive_id = response.headers['Content-Location']
