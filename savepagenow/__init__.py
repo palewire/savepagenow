@@ -3,7 +3,7 @@
 import requests
 from .exceptions import CachedPage
 from six.moves.urllib.parse import urljoin
-__version__ = "0.0.4"
+__version__ = "0.0.5"
 
 
 def capture(
