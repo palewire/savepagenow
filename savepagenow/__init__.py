@@ -3,15 +3,14 @@
 import requests
 from .exceptions import CachedPage
 from six.moves.urllib.parse import urljoin
-
 __version__ = "0.0.5"
 
 
 def capture(
-        target_url,
-        archive="web.archive.org",
-        user_agent="savepagenow (https://github.com/pastpages/savepagenow)",
-        accept_cache=False
+    target_url,
+    archive="web.archive.org",
+    user_agent="savepagenow (https://github.com/pastpages/savepagenow)",
+    accept_cache=False
 ):
     if archive == "webcitation.org":
         return capture_webcitation(target_url, user_agent=user_agent)
@@ -20,18 +19,6 @@ def capture(
     else:
         return capture_web_archive_org(target_url, user_agent=user_agent,
                                        accept_cache=accept_cache)
-
-
-def capture_or_cache(
-        target_url,
-        user_agent="savepagenow (https://github.com/pastpages/savepagenow)"
-):
-    try:
-        return capture(target_url, user_agent=user_agent,
-                       accept_cache=False), True
-    except CachedPage:
-        return capture(target_url, user_agent=user_agent,
-                       accept_cache=True), False
 
 
 def capture_web_archive_org(target_url, user_agent, accept_cache):
@@ -173,3 +160,13 @@ def capture_archive_is(target_url, user_agent):
 
     # the url to the memento is the first element in the list
     return mementos[0]
+
+
+def capture_or_cache(
+    target_url,
+    user_agent="savepagenow (https://github.com/pastpages/savepagenow)"
+):
+    try:
+        return capture(target_url, user_agent=user_agent, accept_cache=False), True
+    except CachedPage:
+        return capture(target_url, user_agent=user_agent, accept_cache=True), False
