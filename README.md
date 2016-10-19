@@ -34,7 +34,7 @@ http://web.archive.org/web/20161018203554/http://www.example.com/
 ```
 
 If a URL has been recently cached, archive.org may return the URL to that page rather
-than conduct a new capture. When that happens, the ``capture`` method will raise an ``CachedPage`` exception.
+than conduct a new capture. When that happens, the ``capture`` method will raise a ``CachedPage`` exception.
 
 This is likely happen if you request the same URL twice within a few seconds.
 
