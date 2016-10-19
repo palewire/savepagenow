@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='savepagenow',
-    version='0.0.2',
+    version='0.0.5',
     description='A simple Python wrapper for archive.org\'s "Save Page Now" capturing service.',
     author='Ben Welsh',
     author_email='ben.welsh@gmail.com',
