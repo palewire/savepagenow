@@ -68,7 +68,7 @@ There's no accounting for taste but you could craft a line to handle that comman
 
 ### Command-line usage
 
-The Python library is also installed a command-line interface. You can run it from your terminal like so:
+The Python library is also installed as a command-line interface. You can run it from your terminal like so:
 
 ```bash
 $ savepagenow http://www.example.com/
