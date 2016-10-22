@@ -12,7 +12,7 @@ A simple Python wrapper for archive.org's "Save Page Now" capturing service.
 $ pip install savepagenow
 ```
 
-### Usage
+### Python Usage
 
 Import it.
 
@@ -64,4 +64,29 @@ There's no accounting for taste but you could craft a line to handle that comman
 
 ```python
 >>> url, captured = savepagenow.capture_or_cache("http://www.example.com/")
+```
+
+### Command-line usage
+
+The Python library is also installed a command-line interface. You can run it from your terminal like so:
+
+```bash
+$ savepagenow http://www.example.com/
+```
+
+The command has the same options as the Python API, which you can learn about from its help output.
+
+```bash
+$ savepagenow --help
+Usage: savepagenow [OPTIONS] URL
+
+  Archives the provided URL using archive.org's Wayback Machine.
+
+  Raises a CachedPage exception if archive.org declines to conduct a new
+  capture and returns a previous snapshot instead.
+
+Options:
+  -ua, --user-agent TEXT  User-Agent header for the web request
+  -c, --accept-cache      Accept and return cached URL
+  --help                  Show this message and exit.
 ```
