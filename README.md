@@ -80,7 +80,7 @@ The command has the same options as the Python API, which you can learn about fr
 $ savepagenow --help
 Usage: savepagenow [OPTIONS] URL
 
-  Archives the provided URL using archive.org's Wayback Machine.
+  Archives the provided URL using the archive.org Wayback Machine.
 
   Raises a CachedPage exception if archive.org declines to conduct a new
   capture and returns a previous snapshot instead.
