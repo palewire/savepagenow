@@ -23,5 +23,10 @@ setup(
     install_requires=[
         'six',
         'requests',
+        'click',
     ],
+entry_points='''
+        [console_scripts]
+        savepagenow=savepagenow.api:cli
+    ''',
 )

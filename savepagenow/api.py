@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+import click
 import requests
-from .exceptions import CachedPage
 from six.moves.urllib.parse import urljoin
 
 
@@ -18,6 +17,9 @@ def capture(
 
     Raises a CachedPage exception if archive.org declines to conduct a new
     capture and returns a previous snapshot instead.
+
+    To silence that exception, pass into True to the ``accept_cache`` keyword
+    argument.
     """
     # Put together the URL that will save our request
     domain = "http://web.archive.org"
@@ -65,3 +67,35 @@ def capture_or_cache(
         return capture(target_url, user_agent=user_agent, accept_cache=False), True
     except CachedPage:
         return capture(target_url, user_agent=user_agent, accept_cache=True), False
+
+
+class CachedPage(Exception):
+    """
+    This error is raised when archive.org declines to make a new capture
+    and instead returns the cached version of most recent archive.
+    """
+    pass
+
+
+@click.command()
+@click.argument("url")
+@click.option("-ua", "--user-agent", help="User-Agent header for the web request")
+@click.option("-c", "--accept-cache", help="Accept and return cached URL", is_flag=True)
+def cli(url, user_agent, accept_cache):
+    """
+    Archives the provided URL using archive.org's Wayback Machine.
+
+    Raises a CachedPage exception if archive.org declines to conduct a new
+    capture and returns a previous snapshot instead.
+    """
+    kwargs = {}
+    if user_agent:
+        kwargs['user_agent'] = user_agent
+    if accept_cache:
+        kwargs['accept_cache'] = accept_cache
+    archive_url = capture(url, **kwargs)
+    click.echo(archive_url)
+
+
+if __name__ == "__main__":
+    cli()
