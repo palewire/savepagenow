@@ -15,7 +15,7 @@ class CaptureTest(unittest.TestCase):
             user_agent="savepagenow (https://github.com/pastpages/savepagenow)"
         )
         self.assertTrue(archive_url_2.startswith("http://web.archive.org/"))
-        self.assertEquals(archive_url_1, archive_url_2)
+        self.assertEqual(archive_url_1, archive_url_2)
 
 
 if __name__ == '__main__':
