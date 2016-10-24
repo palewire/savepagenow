@@ -32,6 +32,11 @@ def capture(
     }
     response = requests.get(request_url, headers=headers)
 
+    if response.status_code == 403:
+        if 'X-Archive-Wayback-Runtime-Error' in response.headers:
+            if response.headers['X-Archive-Wayback-Runtime-Error'] == 'RobotAccessControlException: Blocked By Robots':
+                raise BlockedByRobots("archive.org returned blocked by robots.txt error")
+
     # Put together the URL where this page is archived
     archive_id = response.headers['Content-Location']
     archive_url = urljoin(domain, archive_id)
@@ -73,6 +78,13 @@ class CachedPage(Exception):
     """
     This error is raised when archive.org declines to make a new capture
     and instead returns the cached version of most recent archive.
+    """
+    pass
+
+
+class BlockedByRobots(Exception):
+    """
+    This error is raised when archive.org has been blocked by the site's robots.txt access control instructions.
     """
     pass
 
