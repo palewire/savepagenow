@@ -100,7 +100,7 @@ You can further customize this setting by using the optional arguments to our AP
 Here's how to do it in Python:
 
 ```python
->>> archive_url = savepagenow.capture("http://www.example.com/", user_agent="my user agent here")
+>>> savepagenow.capture("http://www.example.com/", user_agent="my user agent here")
 ```
 
 And here's how to do it from the command line:
