@@ -1,18 +1,21 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 import unittest
+import random
 import savepagenow
 
 
 class CaptureTest(unittest.TestCase):
 
     def test_capture(self):
-        archive_url_1, c1 = savepagenow.capture_or_cache("http://www.example.com/")
+        random_number = random.choice(range(0, 1000))
+        url = "http://www.example.com/my-random-page-{}".format(random_number)
+        archive_url_1, c1 = savepagenow.capture_or_cache(url)
         self.assertTrue(archive_url_1.startswith("http://web.archive.org/"))
 
         # Test CacheError
         archive_url_2, c2 = savepagenow.capture_or_cache(
-            "http://www.example.com/",
+            url,
             user_agent="savepagenow (https://github.com/pastpages/savepagenow)"
         )
         self.assertTrue(archive_url_2.startswith("http://web.archive.org/"))

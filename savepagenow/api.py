@@ -42,7 +42,7 @@ def capture(
     archive_url = urljoin(domain, archive_id)
 
     # Determine if the response was cached
-    cached = response.headers['X-Page-Cache'] == 'HIT'
+    cached = 'X-Page-Cache' in response.headers and response.headers['X-Page-Cache'] == 'HIT'
     if cached:
         if not accept_cache:
             raise CachedPage("archive.org returned a cached version of this page: {}".format(
