@@ -32,15 +32,25 @@ def capture(
     }
     response = requests.get(request_url, headers=headers)
 
+    # If it has an error header, raise that.
+    has_error_header = 'X-Archive-Wayback-Runtime-Error' in response.headers
+    if has_error_header:
+        error_header = response.headers['X-Archive-Wayback-Runtime-Error']
+        if error_header == 'RobotAccessControlException: Blocked By Robots':
+            raise BlockedByRobots("archive.org returned blocked by robots.txt error")
+        else:
+            raise WaybackRuntimeError(error_header)
+
+    # If it has an error code, raise that
     if response.status_code in [403, 502]:
-        if 'X-Archive-Wayback-Runtime-Error' in response.headers:
-            if response.headers['X-Archive-Wayback-Runtime-Error'] == 'RobotAccessControlException: Blocked By Robots':
-                raise BlockedByRobots("archive.org returned blocked by robots.txt error")
-            else:
-                raise WaybackRuntimeError(response.headers['X-Archive-Wayback-Runtime-Error'])
+        raise WaybackRuntimeError(response.headers)
 
     # Put together the URL where this page is archived
-    archive_id = response.headers['Content-Location']
+    try:
+        archive_id = response.headers['Content-Location']
+    except KeyError:
+        # If it can't find that key raise the error
+        raise WaybackRuntimeError(response.headers)
     archive_url = urljoin(domain, archive_id)
 
     # Determine if the response was cached
