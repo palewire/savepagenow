@@ -50,7 +50,7 @@ def capture(
         archive_id = response.headers['Content-Location']
     except KeyError:
         # If it can't find that key raise the error
-        raise WaybackRuntimeError(response.headers)
+        raise WaybackRuntimeError(dict(status_code=response.status_code, headers=response.headers))
     archive_url = urljoin(domain, archive_id)
 
     # Determine if the response was cached
