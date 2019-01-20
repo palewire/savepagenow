@@ -18,7 +18,7 @@ class CaptureTest(unittest.TestCase):
             url,
             user_agent="savepagenow (https://github.com/pastpages/savepagenow)"
         )
-        self.assertTrue(archive_url_2.startswith("http://web.archive.org/"))
+        self.assertTrue(archive_url_2.startswith("https://web.archive.org/"))
         self.assertEqual(archive_url_1, archive_url_2)
 
     # def test_robots_error(self):
