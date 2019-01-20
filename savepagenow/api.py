@@ -86,6 +86,56 @@ def capture_or_cache(
         return capture(target_url, user_agent=user_agent, accept_cache=True), False
 
 
+def get_versions(
+    url,
+    limit=0,
+    chunk_limit=1000,
+    user_agent="savepagenow (https://github.com/pastpages/savepagenow)"
+):
+    """
+    versions returns archived versions of a given URL as an iterator. It will
+    page through results from the Internet Archive's CDX Server API until 
+    there aren't any more.  If you would like to limit the total number of URLs
+    returned use the limit parameter. If you want to change the number of URLs 
+    that are requested at a time from the API use the chunk_limit parameter, 
+    which defaults to 1000 and can have a maximum valuee of 150000.
+    """
+
+    cdx_url = "https://web.archive.org/cdx/search/cdx"
+    params = {
+        "url": url,
+        "limit": chunk_limit,
+        "collapse": "timestamp",
+        "showResumeKey": "true",
+        "output": "json"
+    }
+
+    count = 0
+    more_to_do = True
+    while more_to_do:
+        results = requests.get(cdx_url, params=params).json()
+
+        # remove headers
+        if len(results) > 1:
+            results.pop(0)
+
+        resume_key = None
+        for r in results:
+            if len(r) == 1:
+                resume_key = r[0]
+            elif len(r) > 0:
+                count += 1
+                if limit and count > limit:
+                    more_to_do = False
+                else:
+                    yield 'https://web.archive.org/web/{}/{}'.format(r[1], url)
+       
+        if resume_key:
+            params['resumeKey'] = resume_key
+        else:
+            more_to_do = False
+
+
 class CachedPage(Exception):
     """
     This error is raised when archive.org declines to make a new capture
@@ -112,7 +162,9 @@ class BlockedByRobots(WaybackRuntimeError):
 @click.argument("url")
 @click.option("-ua", "--user-agent", help="User-Agent header for the web request")
 @click.option("-c", "--accept-cache", help="Accept and return cached URL", is_flag=True)
-def cli(url, user_agent, accept_cache):
+@click.option("-v", "--versions", help="Print archived versions of URL", is_flag=True)
+@click.option("-l", "--limit", help="Limit number of archive URLs to return. The default of 0 is unlimited.", default=0)
+def cli(url, user_agent, accept_cache, versions, limit):
     """
     Archives the provided URL using archive.org's Wayback Machine.
 
@@ -124,8 +176,12 @@ def cli(url, user_agent, accept_cache):
         kwargs['user_agent'] = user_agent
     if accept_cache:
         kwargs['accept_cache'] = accept_cache
-    archive_url = capture(url, **kwargs)
-    click.echo(archive_url)
+    if versions:
+        for archive_url in get_versions(url, limit=limit):
+            click.echo(archive_url)
+    else:
+        archive_url = capture(url, **kwargs)
+        click.echo(archive_url)
 
 
 if __name__ == "__main__":

@@ -33,8 +33,9 @@ See where it's stored.
 http://web.archive.org/web/20161018203554/http://www.example.com/
 ```
 
-If a URL has been recently cached, archive.org may return the URL to that page rather
-than conduct a new capture. When that happens, the ``capture`` method will raise a ``CachedPage`` exception.
+If a URL has been recently cached, archive.org may return the URL to that page
+rather than conduct a new capture. When that happens, the ``capture`` method
+will raise a ``CachedPage`` exception.
 
 This is likely happen if you request the same URL twice within a few seconds.
 
@@ -66,6 +67,31 @@ There's no accounting for taste but you could craft a line to handle that comman
 >>> url, captured = savepagenow.capture_or_cache("http://www.example.com/")
 ```
 
+If you want to see the already existing versions of a URL use get_versions which
+will return an iterator that you can use to safely page through the results:
+
+```python
+>>> for url in savepagenow.get_versions('https://www.pastpages.org', limit=10):
+...     print(url)
+... 
+https://web.archive.org/web/20120520115524/http://www.pastpages.org/
+https://web.archive.org/web/20120520115525/http://www.pastpages.org/
+https://web.archive.org/web/20120526045236/http://www.pastpages.org/
+https://web.archive.org/web/20120618220918/http://www.pastpages.org/
+https://web.archive.org/web/20120620013925/http://www.pastpages.org/
+https://web.archive.org/web/20121108093222/http://www.pastpages.org/
+https://web.archive.org/web/20130316162733/http://www.pastpages.org/
+https://web.archive.org/web/20130616072503/http://www.pastpages.org/
+https://web.archive.org/web/20130619201440/http://www.pastpages.org/
+https://web.archive.org/web/20130820141425/http://www.pastpages.org/
+```
+
+If you don't use the ``limit`` parameter then the iterator will page through all
+archived URLs. The ``chunk_limit`` will control how many URLs are requested at a
+time from the Internet Archive's [CDX
+API](https://github.com/internetarchive/wayback/blob/master/wayback-cdx-server/README.md).
+If no value is supplied it will default to 1000, and has a maximum of 150000.
+
 ### Command-line usage
 
 The Python library is also installed as a command-line interface. You can run it from your terminal like so:
@@ -74,13 +100,28 @@ The Python library is also installed as a command-line interface. You can run it
 $ savepagenow http://www.example.com/
 ```
 
+```bash  
+$ savepagenow --versions --limit 10 http://www.pastpages.org/
+https://web.archive.org/web/20120520115524/http://www.pastpages.org/
+https://web.archive.org/web/20120520115525/http://www.pastpages.org/
+https://web.archive.org/web/20120526045236/http://www.pastpages.org/
+https://web.archive.org/web/20120618220918/http://www.pastpages.org/
+https://web.archive.org/web/20120620013925/http://www.pastpages.org/
+https://web.archive.org/web/20121108093222/http://www.pastpages.org/
+https://web.archive.org/web/20130316162733/http://www.pastpages.org/
+https://web.archive.org/web/20130616072503/http://www.pastpages.org/
+https://web.archive.org/web/20130619201440/http://www.pastpages.org/
+https://web.archive.org/web/20130820141425/http://www.pastpages.org/
+...
+```
+
 The command has the same options as the Python API, which you can learn about from its help output.
 
 ```bash
 $ savepagenow --help
 Usage: savepagenow [OPTIONS] URL
 
-  Archives the provided URL using the archive.org Wayback Machine.
+  Archives the provided URL using archive.org Wayback Machine.
 
   Raises a CachedPage exception if archive.org declines to conduct a new
   capture and returns a previous snapshot instead.
@@ -88,7 +129,10 @@ Usage: savepagenow [OPTIONS] URL
 Options:
   -ua, --user-agent TEXT  User-Agent header for the web request
   -c, --accept-cache      Accept and return cached URL
-  --help                  Show this message and exit.
+  -v, --versions          Print archived versions of URL
+  -l, --limit INTEGER     Limit number of archive URLs to return. The default
+                          of 0 is unlimited.
+  --help                  Show this message and exit.k
 ```
 
 ### Customizing the user agent
