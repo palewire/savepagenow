@@ -22,7 +22,7 @@ def capture(
     argument.
     """
     # Put together the URL that will save our request
-    domain = "http://web.archive.org"
+    domain = "https://web.archive.org"
     save_url = urljoin(domain, "/save/")
     request_url = save_url + target_url
 
