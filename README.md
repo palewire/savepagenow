@@ -30,7 +30,7 @@ See where it's stored.
 
 ```python
 >>> print archive_url
-http://web.archive.org/web/20161018203554/http://www.example.com/
+https://web.archive.org/web/20161018203554/http://www.example.com/
 ```
 
 If a URL has been recently cached, archive.org may return the URL to that page rather
@@ -40,13 +40,13 @@ This is likely happen if you request the same URL twice within a few seconds.
 
 ```python
 >>> savepagenow.capture("http://www.example.com/")
-'http://web.archive.org/web/20161019062637/http://www.example.com/'
+'https://web.archive.org/web/20161019062637/http://www.example.com/'
 >>> savepagenow.capture("http://www.example.com/")
 Traceback (most recent call last):
   File "<stdin>", line 1, in <module>
   File "savepagenow/__init__.py", line 36, in capture
     archive_url
-savepagenow.exceptions.CachedPage: archive.org returned a cached version of this page: http://web.archive.org/web/20161019062637/http://www.example.com/
+savepagenow.exceptions.CachedPage: archive.org returned a cached version of this page: https://web.archive.org/web/20161019062637/http://www.example.com/
 ```
 
 You can craft your code to catch that exception yourself, or use the built-in ``capture_or_cache``
@@ -55,9 +55,9 @@ is a fresh capture (True) or from the cache (False).
 
 ```python
 >>> savepagenow.capture_or_cache("http://www.example.com/")
-('http://web.archive.org/web/20161019062832/http://www.example.com/', True)
+('https://web.archive.org/web/20161019062832/http://www.example.com/', True)
 >>> savepagenow.capture_or_cache("http://www.example.com/")
-('http://web.archive.org/web/20161019062832/http://www.example.com/', False)
+('https://web.archive.org/web/20161019062832/http://www.example.com/', False)
 ```
 
 There's no accounting for taste but you could craft a line to handle that command like so:
