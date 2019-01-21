@@ -16,27 +16,35 @@ setup(
     long_description=read('README.rst'),
     author='Ben Welsh',
     author_email='ben.welsh@gmail.com',
-    url='http://www.github.com/pastpages/savepagenow/',
+    url='https://www.github.com/pastpages/savepagenow/',
     packages=('savepagenow',),
     include_package_data=True,
     license="MIT",
+    install_requires=[
+        'six',
+        'requests>=2.20.0',
+        'click'
+    ],
+    entry_points='''
+        [console_scripts]
+        savepagenow=savepagenow.api:cli
+    ''',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
+        'Operating System :: OS Independent',
+        'Intended Audience :: Developers',
         'Programming Language :: Python',
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
-        'License :: OSI Approved :: MIT License',
+        'License :: OSI Approved :: MIT License'
     ],
-    install_requires=[
-        'six',
-        'requests>=2.20.0',
-        'click',
-    ],
-entry_points='''
-        [console_scripts]
-        savepagenow=savepagenow.api:cli
-    ''',
+    project_urls={
+        'Project': 'http://www.pastpages.org/',
+        'Source': 'https://github.com/pastpages/savepagenow',
+        'Coverage': 'https://coveralls.io/github/pastpages/savepagenow?branch=master',
+        'Tracker': 'https://github.com/pastpages/savepagenow/issues'
+    }
 )
