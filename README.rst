@@ -1,4 +1,4 @@
-A simple Python wrapper for archive.org's "Save Page Now" capturing service.
+A simple Python wrapper for archive.org's "Save Page Now" capturing service
 
 .. image:: https://badge.fury.io/py/savepagenow.png
    :target: http://badge.fury.io/py/savepagenow
