@@ -1,10 +1,19 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+import os
 from setuptools import setup
+
+
+def read(fname):
+    with open(os.path.join(os.path.dirname(__file__), fname)) as f:
+        return f.read()
 
 
 setup(
     name='savepagenow',
-    version='0.0.12',
+    version='0.0.13',
     description='A simple Python wrapper for archive.org\'s "Save Page Now" capturing service.',
+    long_description=read('README.rst'),
     author='Ben Welsh',
     author_email='ben.welsh@gmail.com',
     url='http://www.github.com/pastpages/savepagenow/',
