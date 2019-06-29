@@ -26,7 +26,7 @@ def capture(
     save_url = urljoin(domain, "/save/")
     request_url = save_url + target_url
 
-    # Send the capture request to achive.org
+    # Send the capture request to archive.org
     headers = {
         'User-Agent': user_agent,
     }
