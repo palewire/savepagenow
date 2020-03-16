@@ -9,7 +9,7 @@ class CaptureTest(unittest.TestCase):
 
     def test_capture(self):
         random_number = random.choice(range(0, 1000))
-        url = "http://www.example.com/my-random-page-{}".format(random_number)
+        url = "http://www.example.com/?q={}".format(random_number)
         archive_url_1, c1 = savepagenow.capture_or_cache(url)
         self.assertTrue(archive_url_1.startswith("https://web.archive.org/"))
 
