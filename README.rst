@@ -27,7 +27,7 @@ Capture a URL.
 
 .. code-block:: python
 
-   >>> archive_url = savepagenow.capture("http://www.example.com/")
+   >>> (archive_url, captured) = savepagenow.capture("http://www.example.com/")
 
 
 See where it's stored.
@@ -45,7 +45,7 @@ This is likely happen if you request the same URL twice within a few seconds.
 .. code-block:: python
 
    >>> savepagenow.capture("http://www.example.com/")
-   'https://web.archive.org/web/20161019062637/http://www.example.com/'
+   ('https://web.archive.org/web/20161019062637/http://www.example.com/', True)
    >>> savepagenow.capture("http://www.example.com/")
    Traceback (most recent call last):
      File "<stdin>", line 1, in <module>
@@ -58,17 +58,11 @@ You can craft your code to catch that exception yourself, or use the built-in ``
 
 .. code-block:: python
 
-   >>> savepagenow.capture_or_cache("http://www.example.com/")
+   >>> savepagenow.capture("http://www.example.com/", accept_cache=True)
    ('https://web.archive.org/web/20161019062832/http://www.example.com/', True)
-   >>> savepagenow.capture_or_cache("http://www.example.com/")
+   >>> savepagenow.capture_or_cache("http://www.example.com/", accept_cache=True)
    ('https://web.archive.org/web/20161019062832/http://www.example.com/', False)
 
-
-There's no accounting for taste but you could craft a line to handle that command like so:
-
-.. code-block:: python
-
-   >>> url, captured = savepagenow.capture_or_cache("http://www.example.com/")
 
 
 Command-line usage

@@ -19,13 +19,11 @@ def capture(
     """
     Archives the provided URL using archive.org's Wayback Machine.
 
-    Returns the archive.org URL where the capture is stored.
+    Returns a tuple with the archive.org URL where the capture is stored,
+    along with a boolean indicating if a new capture was conducted.
 
-    Raises a CachedPage exception if archive.org declines to conduct a new
-    capture and returns a previous snapshot instead.
-
-    To silence that exception, pass into True to the ``accept_cache`` keyword
-    argument.
+    Raises a CachedPage exception if accept_cache=False and archive.org
+    declines to conduct a new capture and returns a previous snapshot instead.
     """
     # Put together the URL that will save our request
     domain = "https://web.archive.org"
@@ -73,28 +71,7 @@ def capture(
             raise CachedPage(msg)
 
     # Finally, return the archived URL
-    return archive_url
-
-
-def capture_or_cache(
-    target_url,
-    user_agent="savepagenow (https://github.com/pastpages/savepagenow)"
-):
-    """
-    Archives the provided URL using archive.org's Wayback Machine, unless
-    the page has been recently captured.
-
-    Returns a tuple with the archive.org URL where the capture is stored,
-    along with a boolean indicating if a new capture was conducted.
-
-    If the boolean is True, archive.org conducted a new capture. If it is False,
-    archive.org has returned a recently cached capture instead, likely taken
-    in the previous minutes.
-    """
-    try:
-        return capture(target_url, user_agent=user_agent, accept_cache=False), True
-    except CachedPage:
-        return capture(target_url, user_agent=user_agent, accept_cache=True), False
+    return (archive_url, not cached)
 
 
 @click.command()
@@ -113,8 +90,9 @@ def cli(url, user_agent, accept_cache):
         kwargs['user_agent'] = user_agent
     if accept_cache:
         kwargs['accept_cache'] = accept_cache
-    archive_url = capture(url, **kwargs)
+    (archive_url, captured) = capture(url, **kwargs)
     click.echo(archive_url)
+    click.echo(captured)
 
 
 if __name__ == "__main__":
