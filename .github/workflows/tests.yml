@@ -33,7 +33,7 @@ jobs:
       - name: Install pipenv
         uses: dschep/install-pipenv-action@v1
       - name: Install dependencies
-        run: pipenv sync --python ${{ matrix.python-version }}
+        run: pipenv sync --dev --python ${{ matrix.python-version }}
 
       # Run tests
       - name: Run tests

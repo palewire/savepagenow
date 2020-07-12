@@ -21,7 +21,6 @@ setup(
     include_package_data=True,
     license="MIT",
     install_requires=[
-        'six',
         'requests>=2.20.0',
         'click'
     ],

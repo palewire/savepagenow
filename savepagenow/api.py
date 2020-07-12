@@ -2,7 +2,12 @@
 # -*- coding: utf-8 -*-
 import click
 import requests
-from six.moves.urllib.parse import urljoin
+from .exceptions import (
+    CachedPage,
+    WaybackRuntimeError,
+    BlockedByRobots
+)
+from urllib.parse import urljoin
 
 
 def capture(
@@ -84,28 +89,6 @@ def capture_or_cache(
         return capture(target_url, user_agent=user_agent, accept_cache=False), True
     except CachedPage:
         return capture(target_url, user_agent=user_agent, accept_cache=True), False
-
-
-class CachedPage(Exception):
-    """
-    This error is raised when archive.org declines to make a new capture
-    and instead returns the cached version of most recent archive.
-    """
-    pass
-
-
-class WaybackRuntimeError(Exception):
-    """
-    An error returned by the Wayback Machine.
-    """
-    pass
-
-
-class BlockedByRobots(WaybackRuntimeError):
-    """
-    This error is raised when archive.org has been blocked by the site's robots.txt access control instructions.
-    """
-    pass
 
 
 @click.command()
