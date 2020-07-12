@@ -53,7 +53,7 @@ def capture(
 
     # Parse the Link tag in the header, which points to memento URLs in Wayback
     header_links = parse_header_links(response.headers['Link'])
-    
+
     # The link object marked as the `memento` is the one we want to return
     try:
         archive_obj = [h for h in header_links if h['rel'] == 'memento'][0]

@@ -9,8 +9,6 @@ click = "*"
 
 [dev-packages]
 "flake8" = "*"
-coverage = "*"
-coveralls = "*"
 twine = "*"
 
 [requires]
