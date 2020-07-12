@@ -1,4 +1,7 @@
-.PHONY: ship test
+.PHONY: freeze ship test
+
+freeze:
+	pipenv lock -r > .github/workflows/requirements.txt
 
 
 ship:

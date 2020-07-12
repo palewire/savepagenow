@@ -12,13 +12,15 @@ jobs:
       # Install global dependencies
       - name: GitHub actions
         uses: actions/checkout@v2
+
+      # Install Python
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v1
         with:
           python-version: ${{ matrix.python-version }}
 
       # Cache dependencies
-      - name: Cache pipenv
+      - name: Cache Python dependencies
         uses: actions/cache@v2
         with:
           # This path is specific to Ubuntu
@@ -29,14 +31,10 @@ jobs:
             ${{ runner.os }}-${{ matrix.python-version }}-pipenv-
             ${{ runner.os }}-${{ matrix.python-version }}
 
-      # Install pipenv
-      - name: Install pipenv
-        uses: dschep/install-pipenv-action@v1
-
       # Install dependencies
-      - name: Install dependencies
-        run: pipenv install --dev --python ${{ matrix.python-version }}
+      - name: Install Python dependencies
+        run: pip install -r .github/workflows/requirements.txt
 
       # Run tests
-      - name: Run tests
+      - name: Run Python tests
         run: make test
