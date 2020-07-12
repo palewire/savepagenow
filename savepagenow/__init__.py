@@ -3,7 +3,7 @@
 from .api import capture, capture_or_cache, CachedPage, BlockedByRobots
 
 
-__version__ = "0.0.13"
+__version__ = "1.0.1"
 
 __all__ = (
     'BlockedByRobots',
