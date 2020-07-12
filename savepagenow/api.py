@@ -8,6 +8,7 @@ from .exceptions import (
     BlockedByRobots
 )
 from urllib.parse import urljoin
+from requests.utils import parse_header_links
 
 
 def capture(
@@ -47,26 +48,31 @@ def capture(
             raise WaybackRuntimeError(error_header)
 
     # If it has an error code, raise that
-    if response.status_code in [403, 502]:
+    if response.status_code in [403, 502, 520]:
         raise WaybackRuntimeError(response.headers)
 
-    # Put together the URL where this page is archived
+    # Parse the Link tag in the header, which points to memento URLs in Wayback
+    header_links = parse_header_links(response.headers['Link'])
+    
+    # The link object marked as the `memento` is the one we want to return
     try:
-        archive_id = response.headers['Content-Location']
-    except KeyError:
-        # If it can't find that key raise the error
+        archive_obj = [h for h in header_links if h['rel'] == 'memento'][0]
+        archive_url = archive_obj['url']
+    except (IndexError, KeyError):
         raise WaybackRuntimeError(dict(status_code=response.status_code, headers=response.headers))
-    archive_url = urljoin(domain, archive_id)
 
     # Determine if the response was cached
     cached = 'X-Page-Cache' in response.headers and response.headers['X-Page-Cache'] == 'HIT'
-    if cached:
-        if not accept_cache:
-            raise CachedPage("archive.org returned a cached version of this page: {}".format(
-                archive_url
-            ))
 
-    # Return that
+    # If it was cached ...
+    if cached:
+        # .. and we're not allowing that
+        if not accept_cache:
+            # ... throw an error
+            msg = "archive.org returned a cache of this page: {}".format(archive_url)
+            raise CachedPage(msg)
+
+    # Finally, return the archived URL
     return archive_url
 
 
