@@ -34,7 +34,7 @@ See where it's stored.
 
 .. code-block:: python
 
-   >>> print archive_url
+   >>> print(archive_url)
    https://web.archive.org/web/20161018203554/http://www.example.com/
 
 
