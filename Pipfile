@@ -15,4 +15,4 @@ coveralls = "*"
 twine = "*"
 
 [requires]
-python_version = "3.6"
+python_version = "3.8"

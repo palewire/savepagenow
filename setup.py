@@ -34,17 +34,15 @@ setup(
         'Operating System :: OS Independent',
         'Intended Audience :: Developers',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
         'License :: OSI Approved :: MIT License'
     ],
     project_urls={
         'Project': 'http://www.pastpages.org/',
         'Source': 'https://github.com/pastpages/savepagenow',
-        'Coverage': 'https://coveralls.io/github/pastpages/savepagenow?branch=master',
         'Tracker': 'https://github.com/pastpages/savepagenow/issues'
     }
 )

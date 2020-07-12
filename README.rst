@@ -4,21 +4,13 @@ A simple Python wrapper for archive.org's "Save Page Now" capturing service
    :target: http://badge.fury.io/py/savepagenow
    :alt: PyPI version
 
-.. image:: https://travis-ci.org/pastpages/savepagenow.svg?branch=master
-   :target: https://travis-ci.org/pastpages/savepagenow
-   :alt: Build Status
-
-.. image:: https://coveralls.io/repos/github/pastpages/savepagenow/badge.svg?branch=master
-   :target: https://coveralls.io/github/pastpages/savepagenow?branch=master
-   :alt: Coverage Status
-
 
 Installation
 ^^^^^^^^^^^^
 
 .. code-block:: bash
 
-   $ pip install savepagenow
+   $ pipenv install savepagenow
 
 
 Python Usage
