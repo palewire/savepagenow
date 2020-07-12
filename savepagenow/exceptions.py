@@ -4,6 +4,7 @@
 Custom exceptions
 """
 
+
 class CachedPage(Exception):
     """
     This error is raised when archive.org declines to make a new capture
