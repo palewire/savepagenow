@@ -10,6 +10,7 @@ click = "*"
 [dev-packages]
 "flake8" = "*"
 twine = "*"
+coverage = "*"
 
 [requires]
 python_version = "3.8"
