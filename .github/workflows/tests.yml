@@ -29,11 +29,13 @@ jobs:
             ${{ runner.os }}-${{ matrix.python-version }}-pipenv-
             ${{ runner.os }}-${{ matrix.python-version }}
 
-      # Prepare dependencies
+      # Install pipenv
       - name: Install pipenv
         uses: dschep/install-pipenv-action@v1
+
+      # Install dependencies
       - name: Install dependencies
-        run: pipenv sync --dev --python ${{ matrix.python-version }}
+        run: pipenv install --dev --python ${{ matrix.python-version }}
 
       # Run tests
       - name: Run tests
