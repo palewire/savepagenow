@@ -14,7 +14,7 @@ class CaptureTest(unittest.TestCase):
         Test the basic function of retriving a URL from Wayback.
         """
         url = "https://www.latimes.com/"
-        archive_url, c1 = savepagenow.capture_or_cache(url)
+        archive_url, c = savepagenow.capture_or_cache(url)
         self.assertTrue(archive_url.startswith("https://web.archive.org/"))
 
     # def test_robots_error(self):

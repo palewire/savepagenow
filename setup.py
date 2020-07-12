@@ -11,7 +11,7 @@ def read(fname):
 
 setup(
     name='savepagenow',
-    version='0.0.13',
+    version='1.0.0',
     description='A simple Python wrapper for archive.org\'s "Save Page Now" capturing service',
     long_description=read('README.rst'),
     author='Ben Welsh',
