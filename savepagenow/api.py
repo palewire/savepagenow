@@ -8,7 +8,6 @@ from .exceptions import (
     BlockedByRobots
 )
 from urllib.parse import urljoin
-from requests.utils import parse_header_links
 
 
 def capture(
@@ -51,14 +50,11 @@ def capture(
     if response.status_code in [403, 502, 520]:
         raise WaybackRuntimeError(response.headers)
 
-    # Parse the Link tag in the header, which points to memento URLs in Wayback
-    header_links = parse_header_links(response.headers['Link'])
-
     # The link object marked as the `memento` is the one we want to return
     try:
-        archive_obj = [h for h in header_links if h['rel'] == 'memento'][0]
-        archive_url = archive_obj['url']
-    except (IndexError, KeyError):
+        content_location = response.headers['Content-Location']
+        archive_url = domain + content_location
+    except KeyError:
         raise WaybackRuntimeError(dict(status_code=response.status_code, headers=response.headers))
 
     # Determine if the response was cached
