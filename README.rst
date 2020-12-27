@@ -118,3 +118,12 @@ And here's how to do it from the command line:
 .. code-block:: bash
 
    $ savepagenow http://www.example.com/ --user-agent "my user agent here"
+
+Developing the CLI
+^^^^^^^^^^^^^^^^^^
+
+The command-line interface is implemented using Click and setuptools. To install it locally for development inside your virtual environment, run the following installation command, as [prescribed by the Click documentation](https://click.palletsprojects.com/en/7.x/setuptools/#setuptools-integration).
+
+```bash
+$ pip install --editable .
+```
