@@ -27,6 +27,7 @@ class BlockedUrl(WaybackRuntimeError):
     """
     pass
 
+
 class BlockedByRobots(BlockedUrl):
     """
     This error is raised when archive.org has been blocked by the site's
