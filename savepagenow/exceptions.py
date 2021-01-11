@@ -20,8 +20,16 @@ class WaybackRuntimeError(Exception):
     pass
 
 
-class BlockedByRobots(WaybackRuntimeError):
+class BlockedUrl(WaybackRuntimeError):
     """
-    This error is raised when archive.org has been blocked by the site's robots.txt access control instructions.
+    This error is raised when the requested URL is blocked and cannot be
+    captured.
+    """
+    pass
+
+class BlockedByRobots(BlockedUrl):
+    """
+    This error is raised when archive.org has been blocked by the site's
+    robots.txt access control instructions.
     """
     pass
