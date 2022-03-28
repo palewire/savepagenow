@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+import typing
 from urllib.parse import urljoin
 
 import click
@@ -105,13 +105,13 @@ def capture_or_cache(
 @click.argument("url")
 @click.option("-ua", "--user-agent", help="User-Agent header for the web request")
 @click.option("-c", "--accept-cache", help="Accept and return cached URL", is_flag=True)
-def cli(url, user_agent, accept_cache):
+def cli(url: str, user_agent: typing.Optional[str] = None, accept_cache: bool = False):
     """
     Archive the provided URL using archive.org's Wayback Machine.
 
     Raises a CachedPage exception if archive.org declines to conduct a new capture and returns a previous snapshot instead.
     """
-    kwargs = {}
+    kwargs: typing.Dict[typing.Any, typing.Any] = {}
     if user_agent:
         kwargs["user_agent"] = user_agent
     if accept_cache:
@@ -121,4 +121,4 @@ def cli(url, user_agent, accept_cache):
 
 
 if __name__ == "__main__":
-    cli()
+    cli()  # type: ignore
