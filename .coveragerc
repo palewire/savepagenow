@@ -1,4 +1,0 @@
-[run]
-include =
-    savepagenow/__init__.py
-    savepagenow/api.py

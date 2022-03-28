@@ -17,7 +17,7 @@ useragent
 
 ## Links
 
-- Documentation: [palewi.re/docs/savepagenow](https://palewi.re/docs/savepagenow)
+- Documentation: [palewi.re/docs/savepagenow/](https://palewi.re/docs/savepagenow/)
 - Code: [github.com/palewire/savepagenow](https://github.com/palewire/savepagenow)
 - Issues: [github.com/palewire/savepagenow/issues](https://github.com/palewire/savepagenow/issues)
 - Packaging: [pypi.org/project/savepagenow](https://pypi.org/project/savepagenow)
