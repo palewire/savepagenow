@@ -6,9 +6,12 @@ import requests
 from requests.utils import parse_header_links
 
 from .exceptions import (
+    BadGateway,
     BlockedByRobots,
     CachedPage,
+    Forbidden,
     TooManyRequests,
+    UnknownError,
     WaybackRuntimeError,
 )
 
@@ -50,10 +53,15 @@ def capture(
             raise WaybackRuntimeError(error_header)
 
     # If it has an error code, raise that
-    if response.status_code in [403, 502, 520]:
-        raise WaybackRuntimeError(response.headers)
-    elif response.status_code == 429:
+    status_code = response.status_code
+    if status_code == 403:
+        raise Forbidden(response.headers)
+    elif status_code == 429:
         raise TooManyRequests(response.headers)
+    elif status_code == 502:
+        raise BadGateway(response.headers)
+    elif status_code == 520:
+        raise UnknownError(response.headers)
 
     # If there's a content-location header in the response, we will use that.
     try:
