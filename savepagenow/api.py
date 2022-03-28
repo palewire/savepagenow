@@ -5,7 +5,12 @@ import click
 import requests
 from requests.utils import parse_header_links
 
-from .exceptions import BlockedByRobots, CachedPage, WaybackRuntimeError
+from .exceptions import (
+    BlockedByRobots,
+    CachedPage,
+    TooManyRequests,
+    WaybackRuntimeError,
+)
 
 
 def capture(
@@ -47,6 +52,8 @@ def capture(
     # If it has an error code, raise that
     if response.status_code in [403, 502, 520]:
         raise WaybackRuntimeError(response.headers)
+    elif response.status_code == 429:
+        raise TooManyRequests(response.headers)
 
     # If there's a content-location header in the response, we will use that.
     try:
