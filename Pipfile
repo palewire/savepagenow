@@ -4,14 +4,27 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-requests = ">=2.20.0"
+requests = "*"
 click = "*"
 
 [dev-packages]
-"flake8" = "*"
+pytest = "*"
+pytest-vcr = "*"
+black = "*"
 twine = "*"
+Sphinx = "*"
+sphinx-autobuild = "*"
+myst-parser = "*"
+flake8 = "*"
 coverage = "*"
-wheel = "*"
+flake8-docstrings = "*"
+setuptools-scm = "*"
+flake8-bugbear = "*"
+pre-commit = "*"
+sphinxcontrib-napoleon = "*"
+types-requests = "*"
+mypy = "*"
+typing-extensions = "*"
 
 [requires]
-python_version = "3.8"
+python_version = "3.9"

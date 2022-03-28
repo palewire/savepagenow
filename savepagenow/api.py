@@ -1,23 +1,20 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
+from urllib.parse import urljoin
+
 import click
 import requests
-from .exceptions import (
-    CachedPage,
-    WaybackRuntimeError,
-    BlockedByRobots
-)
-from urllib.parse import urljoin
 from requests.utils import parse_header_links
+
+from .exceptions import BlockedByRobots, CachedPage, WaybackRuntimeError
 
 
 def capture(
     target_url,
     user_agent="savepagenow (https://github.com/pastpages/savepagenow)",
-    accept_cache=False
+    accept_cache=False,
 ):
     """
-    Archives the provided URL using archive.org's Wayback Machine.
+    Archive the provided URL using archive.org's Wayback Machine.
 
     Returns the archive.org URL where the capture is stored.
 
@@ -34,15 +31,15 @@ def capture(
 
     # Send the capture request to archive.org
     headers = {
-        'User-Agent': user_agent,
+        "User-Agent": user_agent,
     }
     response = requests.get(request_url, headers=headers)
 
     # If it has an error header, raise that.
-    has_error_header = 'X-Archive-Wayback-Runtime-Error' in response.headers
+    has_error_header = "X-Archive-Wayback-Runtime-Error" in response.headers
     if has_error_header:
-        error_header = response.headers['X-Archive-Wayback-Runtime-Error']
-        if error_header == 'RobotAccessControlException: Blocked By Robots':
+        error_header = response.headers["X-Archive-Wayback-Runtime-Error"]
+        if error_header == "RobotAccessControlException: Blocked By Robots":
             raise BlockedByRobots("archive.org returned blocked by robots.txt error")
         else:
             raise WaybackRuntimeError(error_header)
@@ -53,28 +50,32 @@ def capture(
 
     # If there's a content-location header in the response, we will use that.
     try:
-        content_location = response.headers['Content-Location']
+        content_location = response.headers["Content-Location"]
         archive_url = domain + content_location
     except KeyError:
         # If there's not, we  will try to parse out a Link header, which is another style they use.
         try:
             # Parse the Link tag in the header, which points to memento URLs in Wayback
-            header_links = parse_header_links(response.headers['Link'])
-            archive_obj = [h for h in header_links if h['rel'] == 'memento'][0]
-            archive_url = archive_obj['url']
+            header_links = parse_header_links(response.headers["Link"])
+            archive_obj = [h for h in header_links if h["rel"] == "memento"][0]
+            archive_url = archive_obj["url"]
         except Exception:
             # If neither of those things works throw this error.
-            raise WaybackRuntimeError(dict(status_code=response.status_code, headers=response.headers))
+            raise WaybackRuntimeError(
+                dict(status_code=response.status_code, headers=response.headers)
+            )
 
     # Determine if the response was cached
-    cached = 'X-Page-Cache' in response.headers and response.headers['X-Page-Cache'] == 'HIT'
+    cached = (
+        "X-Page-Cache" in response.headers and response.headers["X-Page-Cache"] == "HIT"
+    )
 
     # If it was cached ...
     if cached:
         # .. and we're not allowing that
         if not accept_cache:
             # ... throw an error
-            msg = "archive.org returned a cache of this page: {}".format(archive_url)
+            msg = f"archive.org returned a cache of this page: {archive_url}"
             raise CachedPage(msg)
 
     # Finally, return the archived URL
@@ -82,12 +83,10 @@ def capture(
 
 
 def capture_or_cache(
-    target_url,
-    user_agent="savepagenow (https://github.com/pastpages/savepagenow)"
+    target_url, user_agent="savepagenow (https://github.com/pastpages/savepagenow)"
 ):
     """
-    Archives the provided URL using archive.org's Wayback Machine, unless
-    the page has been recently captured.
+    Archive the provided URL using archive.org's Wayback Machine, unless the page has been recently captured.
 
     Returns a tuple with the archive.org URL where the capture is stored,
     along with a boolean indicating if a new capture was conducted.
@@ -108,16 +107,16 @@ def capture_or_cache(
 @click.option("-c", "--accept-cache", help="Accept and return cached URL", is_flag=True)
 def cli(url, user_agent, accept_cache):
     """
-    Archives the provided URL using archive.org's Wayback Machine.
+    Archive the provided URL using archive.org's Wayback Machine.
 
     Raises a CachedPage exception if archive.org declines to conduct a new
     capture and returns a previous snapshot instead.
     """
     kwargs = {}
     if user_agent:
-        kwargs['user_agent'] = user_agent
+        kwargs["user_agent"] = user_agent
     if accept_cache:
-        kwargs['accept_cache'] = accept_cache
+        kwargs["accept_cache"] = accept_cache
     archive_url = capture(url, **kwargs)
     click.echo(archive_url)
 

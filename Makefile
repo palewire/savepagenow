@@ -1,16 +1,19 @@
-.PHONY: freeze ship test
+.PHONY: lint test mypy
 
-
-freeze:
-	pipenv lock --dev -r > .github/workflows/requirements.txt
-
-
-ship:
-	pipenv run python setup.py sdist bdist_wheel
-	pipenv run twine upload dist/* --skip-existing
-
+lint:
+	pipenv run flake8 ./
 
 test:
-	flake8 savepagenow
-	coverage run test.py
-	coverage report -m
+	pipenv run pytest tests
+
+mypy:
+	pipenv run mypy ./savepagenow
+
+
+check-release:
+	pipenv run twine check dist/*
+
+
+build-release:
+	pipenv run python setup.py sdist
+	pipenv run python setup.py bdist_wheel
