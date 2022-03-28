@@ -41,7 +41,8 @@ def local_version(version):
 setup(
     name="savepagenow",
     description='A simple Python wrapper and command-line interface for archive.org’s "Save Page Now" capturing service',
-    long_description=read("README.rst"),
+    long_description=read("README.md"),
+    long_description_content_type="text/markdown",
     author="Ben Welsh",
     author_email="b@palewi.re",
     url="https://www.github.com/palewire/savepagenow/",
