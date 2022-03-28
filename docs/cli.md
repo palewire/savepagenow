@@ -1,3 +1,6 @@
+```{include} _templates/nav.html
+```
+
 # Command-line usage
 
 The Python library is also installed as a command-line interface. You can run it from your terminal like so:
