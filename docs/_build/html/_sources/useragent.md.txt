@@ -1,3 +1,6 @@
+```{include} _templates/nav.html
+```
+
 # Customizing the user agent
 
 In an effort to be transparent and polite to the Internet Archive, all requests made by savepagenow carry a custom [user agent](https://en.wikipedia.org/wiki/User_agent) that identifies itself as ``"savepagenow (https://github.com/pastpages/savepagenow)"``.

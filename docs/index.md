@@ -13,6 +13,7 @@ install
 python
 cli
 useragent
+exceptions
 ```
 
 ## Links

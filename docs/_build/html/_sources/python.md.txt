@@ -1,3 +1,6 @@
+```{include} _templates/nav.html
+```
+
 # Python Usage
 
 First import the library into your Python code.
