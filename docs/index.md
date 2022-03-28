@@ -1,3 +1,20 @@
+```{include} _templates/nav.html
+```
+
+# savepagenow
+
+A simple Python wrapper and command-line interface for archive.org’s "Save Page Now" capturing service
+
+```{toctree}
+:maxdepth: 1
+:name: mastertoc
+
+install
+python
+cli
+useragent
+```
+
 ## Links
 
 - Documentation: [palewi.re/docs/savepagenow](https://palewi.re/docs/savepagenow)

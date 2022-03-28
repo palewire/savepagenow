@@ -25,6 +25,7 @@ sphinxcontrib-napoleon = "*"
 types-requests = "*"
 mypy = "*"
 typing-extensions = "*"
+sphinx-click = "*"
 
 [requires]
 python_version = "3.9"

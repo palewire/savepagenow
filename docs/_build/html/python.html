@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Python Usage &#8212; savepagenow  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Command-line usage" href="cli.html" />
+    <link rel="prev" title="Installation" href="install.html" />
+
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+
+
+    <link rel="canonical" href="https://palewi.re/docs/savepagenow/python.html"/>
+
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+
+
+          <div class="body" role="main">
+
+  <section id="python-usage">
+<h1>Python Usage<a class="headerlink" href="#python-usage" title="Permalink to this headline">¶</a></h1>
+<p>First import the library into your Python code.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">savepagenow</span>
+</pre></div>
+</div>
+<p>Capture a URL.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">archive_url</span> <span class="o">=</span> <span class="n">savepagenow</span><span class="o">.</span><span class="n">capture</span><span class="p">(</span><span class="s2">&quot;http://www.example.com/&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>See where it’s stored.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">archive_url</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If a URL has been recently cached, archive.org may return the URL to that page rather than conduct a new capture. When that happens, the <code class="docutils literal notranslate"><span class="pre">capture</span></code> method will raise a <code class="docutils literal notranslate"><span class="pre">CachedPage</span></code> exception.</p>
+<p>This is likely happen if you request the same URL twice within a few seconds.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">savepagenow</span><span class="o">.</span><span class="n">capture</span><span class="p">(</span><span class="s2">&quot;http://www.example.com/&quot;</span><span class="p">)</span>
+<span class="s1">&#39;https://web.archive.org/web/20161019062637/http://www.example.com/&#39;</span>
+<span class="n">savepagenow</span><span class="o">.</span><span class="n">capture</span><span class="p">(</span><span class="s2">&quot;http://www.example.com/&quot;</span><span class="p">)</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+   <span class="n">File</span> <span class="s2">&quot;&lt;stdin&gt;&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+   <span class="n">File</span> <span class="s2">&quot;savepagenow/__init__.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">36</span><span class="p">,</span> <span class="ow">in</span> <span class="n">capture</span>
+      <span class="n">archive_url</span>
+<span class="n">savepagenow</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">CachedPage</span><span class="p">:</span> <span class="n">archive</span><span class="o">.</span><span class="n">org</span> <span class="n">returned</span> <span class="n">a</span> <span class="n">cached</span> <span class="n">version</span> <span class="n">of</span> <span class="n">this</span> <span class="n">page</span><span class="p">:</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">web</span><span class="o">.</span><span class="n">archive</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">web</span><span class="o">/</span><span class="mi">20161019062637</span><span class="o">/</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/</span>
+</pre></div>
+</div>
+<p>You can craft your code to catch that exception yourself, or use the built-in <code class="docutils literal notranslate"><span class="pre">capture_or_cache</span></code> method, which will return the URL provided by archive.org along with a boolean indicating if it is a fresh capture (True) or from the cache (False).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">savepagenow</span><span class="o">.</span><span class="n">capture_or_cache</span><span class="p">(</span><span class="s2">&quot;http://www.example.com/&quot;</span><span class="p">)</span>
+<span class="p">(</span><span class="s2">&quot;https://web.archive.org/web/20161019062832/http://www.example.com/&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">savepagenow</span><span class="o">.</span><span class="n">capture_or_cache</span><span class="p">(</span><span class="s2">&quot;http://www.example.com/&quot;</span><span class="p">)</span>
+<span class="p">(</span><span class="s2">&quot;https://web.archive.org/web/20161019062832/http://www.example.com/&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>There’s no accounting for taste but you could craft a line to handle that command like so:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">url</span><span class="p">,</span> <span class="n">captured</span> <span class="o">=</span> <span class="n">savepagenow</span><span class="o">.</span><span class="n">capture_or_cache</span><span class="p">(</span><span class="s2">&quot;http://www.example.com/&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="install.html" title="Previous document">Installation</a>
+        </li>
+        <li>
+          <a href="cli.html" title="Next document">Command-line usage</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">savepagenow</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Python Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Command-line usage</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="install.html" title="previous chapter">Installation</a></li>
+      <li>Next: <a href="cli.html" title="next chapter">Command-line usage</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2022 Ben Welsh.
+
+      |
+      <a href="_sources/python.md.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+
+
+
+  </body>
+</html>

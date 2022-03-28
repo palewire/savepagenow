@@ -1,0 +1,6 @@
+sphinx
+myst-parser
+sphinxcontrib-napoleon
+sphinx-click
+click
+requests

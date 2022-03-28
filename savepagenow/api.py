@@ -109,8 +109,7 @@ def cli(url, user_agent, accept_cache):
     """
     Archive the provided URL using archive.org's Wayback Machine.
 
-    Raises a CachedPage exception if archive.org declines to conduct a new
-    capture and returns a previous snapshot instead.
+    Raises a CachedPage exception if archive.org declines to conduct a new capture and returns a previous snapshot instead.
     """
     kwargs = {}
     if user_agent:
