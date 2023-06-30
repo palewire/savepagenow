@@ -6,7 +6,7 @@ import click
 import requests
 from requests.utils import parse_header_links
 
-from exceptions import (
+from .exceptions import (
     BadGateway,
     BlockedByRobots,
     CachedPage,
@@ -45,11 +45,14 @@ def capture(
 
     # Access Keys for Internet Archive API
     if authenticate:
-        if 'access_key' in os.environ and 'secret' in os.environ:
-            access_key = os.environ['access_key']
-            secret = os.environ['secret']
-        else: 
-            print("You have not set your local environment variables access_key and secret in order to use the authenticate flag")
+        if "access_key" in os.environ and "secret" in os.environ:
+            access_key = os.environ["access_key"]
+            secret = os.environ["secret"]
+        else:
+            print(
+                "You have not set your local environment variables access_key" 
+                "and secret in order to use the authenticate flag"
+            )
             sys.exit(1)
         authorization = f"LOW {access_key}:{secret}"
         headers = {
@@ -67,7 +70,6 @@ def capture(
             "User-Agent": user_agent,
         }
         response = requests.get(request_url, headers=headers)
-    
 
     # If it has an error header, raise that.
     has_error_header = "X-Archive-Wayback-Runtime-Error" in response.headers
