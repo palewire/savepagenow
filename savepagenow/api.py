@@ -1,11 +1,12 @@
 import typing
 from urllib.parse import urljoin
 import os
+import sys
 import click
 import requests
 from requests.utils import parse_header_links
 
-from .exceptions import (
+from exceptions import (
     BadGateway,
     BlockedByRobots,
     CachedPage,
@@ -43,9 +44,13 @@ def capture(
     request_url = save_url + target_url
 
     # Access Keys for Internet Archive API
-    access_key = os.environ["access_key"]
-    secret = os.environ["secret"]
     if authenticate:
+        if 'access_key' in os.environ and 'secret' in os.environ:
+            access_key = os.environ['access_key']
+            secret = os.environ['secret']
+        else: 
+            print("You have not set your local environment variables access_key and secret in order to use the authenticate flag")
+            sys.exit(1)
         authorization = f"LOW {access_key}:{secret}"
         headers = {
             "Accept": "application/json",
@@ -53,13 +58,16 @@ def capture(
             "Authorization": authorization,
             "Content-Type": "application/x-www-form-urlencoded",
         }
-
+        response = requests.get(request_url, headers=headers)
+        if response.status_code == 401:
+            print("Your archive.org access key and/or secret is not valid")
+            sys.exit(1)
     else:
         headers = {
             "User-Agent": user_agent,
         }
-
-    response = requests.get(request_url, headers=headers)
+        response = requests.get(request_url, headers=headers)
+    
 
     # If it has an error header, raise that.
     has_error_header = "X-Archive-Wayback-Runtime-Error" in response.headers
