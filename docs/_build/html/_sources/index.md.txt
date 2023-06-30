@@ -3,7 +3,7 @@
 
 # savepagenow
 
-A simple Python wrapper and command-line interface for archive.org’s "Save Page Now" capturing service
+A simple Python wrapper and command-line interface for archive.org’s [“Save Page Now”](https://archive.org/web) capturing service
 
 ```{toctree}
 :maxdepth: 1

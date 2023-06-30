@@ -1,40 +1,38 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Exceptions &#8212; savepagenow  documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
     <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="Customizing the user agent" href="useragent.html" />
-
+   
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-
-
+  
+  
     <link rel="canonical" href="https://palewi.re/docs/savepagenow/exceptions.html"/>
-
+  
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
   </head><body>
-
+  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-
+          
 
           <div class="body" role="main">
-
+            
   <nav>
     <div class="row">
         <div class="sevencol">
@@ -83,12 +81,19 @@
     <div class="twelvecol last"></div>
 </div>
 <section id="exceptions">
-<h1>Exceptions<a class="headerlink" href="#exceptions" title="Permalink to this headline">¶</a></h1>
+<h1>Exceptions<a class="headerlink" href="#exceptions" title="Permalink to this heading">¶</a></h1>
 <p>Custom errors you can expect.</p>
 <span class="target" id="module-savepagenow.exceptions"></span><dl class="py exception">
+<dt class="sig sig-object py" id="savepagenow.exceptions.BadGateway">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">savepagenow.exceptions.</span></span><span class="sig-name descname"><span class="pre">BadGateway</span></span><a class="headerlink" href="#savepagenow.exceptions.BadGateway" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#savepagenow.exceptions.WaybackRuntimeError" title="savepagenow.exceptions.WaybackRuntimeError"><code class="xref py py-class docutils literal notranslate"><span class="pre">WaybackRuntimeError</span></code></a></p>
+<p>Raised when archive.org when you receive a 502 bad gateway status code in response to your request.</p>
+</dd></dl>
+
+<dl class="py exception">
 <dt class="sig sig-object py" id="savepagenow.exceptions.BlockedByRobots">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">savepagenow.exceptions.</span></span><span class="sig-name descname"><span class="pre">BlockedByRobots</span></span><a class="headerlink" href="#savepagenow.exceptions.BlockedByRobots" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#savepagenow.exceptions.WaybackRuntimeError" title="savepagenow.exceptions.WaybackRuntimeError"><code class="xref py py-class docutils literal notranslate"><span class="pre">savepagenow.exceptions.WaybackRuntimeError</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#savepagenow.exceptions.WaybackRuntimeError" title="savepagenow.exceptions.WaybackRuntimeError"><code class="xref py py-class docutils literal notranslate"><span class="pre">WaybackRuntimeError</span></code></a></p>
 <p>Raised when archive.org has been blocked by the site’s robots.txt access control instructions.</p>
 </dd></dl>
 
@@ -100,10 +105,24 @@
 </dd></dl>
 
 <dl class="py exception">
+<dt class="sig sig-object py" id="savepagenow.exceptions.Forbidden">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">savepagenow.exceptions.</span></span><span class="sig-name descname"><span class="pre">Forbidden</span></span><a class="headerlink" href="#savepagenow.exceptions.Forbidden" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#savepagenow.exceptions.WaybackRuntimeError" title="savepagenow.exceptions.WaybackRuntimeError"><code class="xref py py-class docutils literal notranslate"><span class="pre">WaybackRuntimeError</span></code></a></p>
+<p>Raised when archive.org when you receive a 403 forbidden status code in response to your request.</p>
+</dd></dl>
+
+<dl class="py exception">
 <dt class="sig sig-object py" id="savepagenow.exceptions.TooManyRequests">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">savepagenow.exceptions.</span></span><span class="sig-name descname"><span class="pre">TooManyRequests</span></span><a class="headerlink" href="#savepagenow.exceptions.TooManyRequests" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#savepagenow.exceptions.WaybackRuntimeError" title="savepagenow.exceptions.WaybackRuntimeError"><code class="xref py py-class docutils literal notranslate"><span class="pre">savepagenow.exceptions.WaybackRuntimeError</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#savepagenow.exceptions.WaybackRuntimeError" title="savepagenow.exceptions.WaybackRuntimeError"><code class="xref py py-class docutils literal notranslate"><span class="pre">WaybackRuntimeError</span></code></a></p>
 <p>Raised when archive.org when you have exceeded its throttle on request frequency. Slow it down.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="savepagenow.exceptions.UnknownError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">savepagenow.exceptions.</span></span><span class="sig-name descname"><span class="pre">UnknownError</span></span><a class="headerlink" href="#savepagenow.exceptions.UnknownError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#savepagenow.exceptions.WaybackRuntimeError" title="savepagenow.exceptions.WaybackRuntimeError"><code class="xref py py-class docutils literal notranslate"><span class="pre">WaybackRuntimeError</span></code></a></p>
+<p>Raised when archive.org when you receive a 520 unknown status code in response to your request.</p>
 </dd></dl>
 
 <dl class="py exception">
@@ -128,7 +147,7 @@
     </ul>
   </nav>
               </div>
-
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -168,7 +187,7 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 
@@ -182,15 +201,15 @@
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2022 Ben Welsh.
-
+      &copy;2023 Ben Welsh.
+      
       |
       <a href="_sources/exceptions.md.txt"
           rel="nofollow">Page source</a>
     </div>
 
+    
 
-
-
+    
   </body>
 </html>

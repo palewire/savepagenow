@@ -3,24 +3,35 @@
 
 # Python Usage
 
-First import the library into your Python code.
+##  First import the library into your Python code.
 
 ```python
 import savepagenow
 ```
 
-Capture a URL.
+## Capture a URL.
 
 ```python
 archive_url = savepagenow.capture("http://www.example.com/")
 ```
 
-See where it's stored.
+## See where it's stored.
 
 ```python
 print(archive_url)
 ```
 
+## Capture a URL with authentication. 
+
+By default, savepagenow runs without authentication. This means that the tool can do four captures per minute. 
+If you'd like to run authenticated WayBack saves, which allows you to do 12 captures per minute, 
+set local environment variables ``access_key`` and ``secret`` to your [Internet Archive credentials](https://archive.org/account/s3.php). 
+Then, you can run capture() with the authenticate flag set to true like so:
+```python
+archive_url = savepagenow.capture("https://www.example.com/", authenticate=True)
+```
+
+## CachedPage Exception Handling
 If a URL has been recently cached, archive.org may return the URL to that page rather than conduct a new capture. When that happens, the ``capture`` method will raise a ``CachedPage`` exception.
 
 This is likely happen if you request the same URL twice within a few seconds.

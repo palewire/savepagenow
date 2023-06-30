@@ -1,41 +1,39 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Command-line usage &#8212; savepagenow  documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
     <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Customizing the user agent" href="useragent.html" />
     <link rel="prev" title="Python Usage" href="python.html" />
-
+   
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-
-
+  
+  
     <link rel="canonical" href="https://palewi.re/docs/savepagenow/cli.html"/>
-
+  
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
   </head><body>
-
+  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-
+          
 
           <div class="body" role="main">
-
+            
   <nav>
     <div class="row">
         <div class="sevencol">
@@ -84,16 +82,14 @@
     <div class="twelvecol last"></div>
 </div>
 <section id="command-line-usage">
-<h1>Command-line usage<a class="headerlink" href="#command-line-usage" title="Permalink to this headline">¶</a></h1>
+<h1>Command-line usage<a class="headerlink" href="#command-line-usage" title="Permalink to this heading">¶</a></h1>
 <p>The Python library is also installed as a command-line interface. You can run it from your terminal like so:</p>
 <p>The command has the same options as the Python API.</p>
 <section id="savepagenow">
-<h2>savepagenow<a class="headerlink" href="#savepagenow" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><p>Archive the provided URL using archive.org’s Wayback Machine.</p>
+<h2>savepagenow<a class="headerlink" href="#savepagenow" title="Permalink to this heading">¶</a></h2>
+<p>Archive the provided URL using archive.org’s Wayback Machine.</p>
 <p>Raises a CachedPage exception if archive.org declines to conduct a new capture and returns a previous snapshot instead.</p>
-</div></blockquote>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>savepagenow <span class="o">[</span>OPTIONS<span class="o">]</span> URL
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>savepagenow<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>URL
 </pre></div>
 </div>
 <p class="rubric">Options</p>
@@ -109,18 +105,24 @@
 <dd><p>Accept and return cached URL</p>
 </dd></dl>
 
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-savepagenow-a">
+<span id="cmdoption-savepagenow-authenticate"></span><span class="sig-name descname"><span class="pre">-a</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--authenticate</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-savepagenow-a" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allows you to run saves with authenication, must have local environment variables set</p>
+</dd></dl>
+
 <p class="rubric">Arguments</p>
 <dl class="std option">
 <dt class="sig sig-object std" id="cmdoption-savepagenow-arg-URL">
-<span id="cmdoption-savepagenow-arg-url"></span><span class="sig-name descname"><span class="pre">URL</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-savepagenow-arg-URL" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">URL</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-savepagenow-arg-URL" title="Permalink to this definition">¶</a></dt>
 <dd><p>Required argument</p>
 </dd></dl>
 
 </section>
 <section id="developing-the-cli">
-<h2>Developing the CLI<a class="headerlink" href="#developing-the-cli" title="Permalink to this headline">¶</a></h2>
+<h2>Developing the CLI<a class="headerlink" href="#developing-the-cli" title="Permalink to this heading">¶</a></h2>
 <p>The command-line interface is implemented using Click and setuptools. To install it locally for development inside your virtual environment, run the following installation command, as <a class="reference external" href="https://click.palletsprojects.com/en/7.x/setuptools/#setuptools-integration">prescribed by the Click documentation</a>.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install --editable .
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>--editable<span class="w"> </span>.
 </pre></div>
 </div>
 </section>
@@ -143,7 +145,7 @@
     </ul>
   </nav>
               </div>
-
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -184,7 +186,7 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 
@@ -198,15 +200,15 @@
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2022 Ben Welsh.
-
+      &copy;2023 Ben Welsh.
+      
       |
       <a href="_sources/cli.md.txt"
           rel="nofollow">Page source</a>
     </div>
 
+    
 
-
-
+    
   </body>
 </html>
