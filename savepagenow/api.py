@@ -5,7 +5,7 @@ import click
 import requests
 from requests.utils import parse_header_links
 
-from exceptions import (
+from .exceptions import (
     BadGateway,
     BlockedByRobots,
     CachedPage,
@@ -18,7 +18,7 @@ from exceptions import (
 
 def capture(
     target_url,
-    user_agent="Klaxon https://github.com/MuckRock/Klaxon",
+    user_agent="savepagenow (https://github.com/pastpages/savepagenow)",
     accept_cache=False,
     authenticate=False
 ):
