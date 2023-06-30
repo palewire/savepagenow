@@ -6,7 +6,7 @@ import click
 import requests
 from requests.utils import parse_header_links
 
-from .exceptions import (
+from exceptions import (
     BadGateway,
     BlockedByRobots,
     CachedPage,
