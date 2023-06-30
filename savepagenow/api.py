@@ -1,11 +1,11 @@
 import typing
 from urllib.parse import urljoin
-
+import os 
 import click
 import requests
 from requests.utils import parse_header_links
 
-from .exceptions import (
+from exceptions import (
     BadGateway,
     BlockedByRobots,
     CachedPage,
@@ -18,8 +18,9 @@ from .exceptions import (
 
 def capture(
     target_url,
-    user_agent="savepagenow (https://github.com/pastpages/savepagenow)",
+    user_agent="Klaxon https://github.com/MuckRock/Klaxon",
     accept_cache=False,
+    authenticate=False
 ):
     """
     Archive the provided URL using archive.org's Wayback Machine.
@@ -31,16 +32,35 @@ def capture(
 
     To silence that exception, pass into True to the ``accept_cache`` keyword
     argument.
+
+    By default, operates in an anonymous, unauthed way. 
+    Can mark as authenticate. Must have access_key and secret 
+    set as local environment variables to use authenticated requests. 
     """
     # Put together the URL that will save our request
     domain = "https://web.archive.org"
     save_url = urljoin(domain, "/save/")
     request_url = save_url + target_url
 
-    # Send the capture request to archive.org
-    headers = {
-        "User-Agent": user_agent,
-    }
+    # Access Keys for Internet Archive API
+    access_key = os.environ['access_key']
+    secret = os.environ['secret']
+    
+
+    if authenticate:
+        authorization = f'LOW {access_key}:{secret}'
+        headers = {
+            'Accept': 'application/json',
+            'User-Agent': user_agent,
+            'Authorization': authorization,
+            'Content-Type': 'application/x-www-form-urlencoded',
+        }
+
+    else:
+        headers = {
+            "User-Agent": user_agent,
+        }
+
     response = requests.get(request_url, headers=headers)
 
     # If it has an error header, raise that.
@@ -120,7 +140,8 @@ def capture_or_cache(
 @click.argument("url")
 @click.option("-ua", "--user-agent", help="User-Agent header for the web request")
 @click.option("-c", "--accept-cache", help="Accept and return cached URL", is_flag=True)
-def cli(url: str, user_agent: typing.Optional[str] = None, accept_cache: bool = False):
+@click.option("-a", "--authenticate", help="Allows you to run saves with authenication, must have local environment variables set", is_flag=True)
+def cli(url: str, user_agent: typing.Optional[str] = None, accept_cache: bool = False, authenticate: bool = False):
     """
     Archive the provided URL using archive.org's Wayback Machine.
 
@@ -131,6 +152,8 @@ def cli(url: str, user_agent: typing.Optional[str] = None, accept_cache: bool = 
         kwargs["user_agent"] = user_agent
     if accept_cache:
         kwargs["accept_cache"] = accept_cache
+    if authenticate:
+        kwargs["authenticate"] = authenticate
     archive_url = capture(url, **kwargs)
     click.echo(archive_url)
 
