@@ -22,6 +22,12 @@ class BadGateway(WaybackRuntimeError):
     pass
 
 
+class Unauthorized(WaybackRuntimeError):
+    """Raised when archive.org when you receive a 401 unauthorized status code in response to your request."""
+
+    pass
+
+
 class Forbidden(WaybackRuntimeError):
     """Raised when archive.org when you receive a 403 forbidden status code in response to your request."""
 

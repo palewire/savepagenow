@@ -13,6 +13,7 @@ from exceptions import (
     CachedPage,
     Forbidden,
     TooManyRequests,
+    Unauthorized,
     UnknownError,
     WaybackRuntimeError,
 )
@@ -56,22 +57,19 @@ def capture(
                 "and secret in order to use the authenticate flag"
             )
             sys.exit(1)
-        authorization = f"LOW {access_key}:{secret}"
         headers = {
             "Accept": "application/json",
             "User-Agent": user_agent,
-            "Authorization": authorization,
+            "Authorization": f"LOW {access_key}:{secret}",
             "Content-Type": "application/x-www-form-urlencoded",
         }
-        response = requests.get(request_url, headers=headers)
-        if response.status_code == 401:
-            print("Your archive.org access key and/or secret is not valid")
-            sys.exit(1)
     else:
         headers = {
             "User-Agent": user_agent,
         }
-        response = requests.get(request_url, headers=headers)
+
+    # Make the request
+    response = requests.get(request_url, headers=headers)
 
     # If it has an error header, raise that.
     has_error_header = "X-Archive-Wayback-Runtime-Error" in response.headers
@@ -84,7 +82,9 @@ def capture(
 
     # If it has an error code, raise that
     status_code = response.status_code
-    if status_code == 403:
+    if status_code == 401:
+        raise Unauthorized("Your archive.org access key and/or secret is not valid")
+    elif status_code == 403:
         raise Forbidden(response.headers)
     elif status_code == 429:
         raise TooManyRequests(response.headers)
