@@ -19,10 +19,12 @@ from exceptions import (
 )
 from requests.utils import parse_header_links
 
+DEFAULT_USER_AGENT = "savepagenow (https://github.com/pastpages/savepagenow)"
+
 
 def capture(
     target_url: str,
-    user_agent: str = "savepagenow (https://github.com/pastpages/savepagenow)",
+    user_agent: str = DEFAULT_USER_AGENT,
     accept_cache: bool = False,
     authenticate: bool = False,
 ):
@@ -129,7 +131,7 @@ def capture(
 
 def capture_or_cache(
     target_url: str,
-    user_agent: str = "savepagenow (https://github.com/pastpages/savepagenow)",
+    user_agent: str = DEFAULT_USER_AGENT,
 ):
     """
     Archive the provided URL using archive.org's Wayback Machine, unless the page has been recently captured.
