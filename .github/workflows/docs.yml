@@ -1,4 +1,4 @@
-name: "Build documentation"
+name: Build documentation
 on:
   push:
   pull_request:
@@ -6,21 +6,25 @@ on:
 
 jobs:
   docs:
-    name: "Build and deploy"
+    name: Build and deploy
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+    - name: Checkout
+      uses: actions/checkout@v3
 
-    - uses: ammaraskar/sphinx-action@master
+    - name: Build documentation
+      uses: ammaraskar/sphinx-action@master
       with:
         docs-folder: "docs/"
 
-    - uses: actions/upload-artifact@v1
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
       with:
         name: documentation-html
         path: docs/_build/html/
 
-    - uses: shallwefootball/s3-upload-action@master
+    - name: Deploy site
+      uses: shallwefootball/s3-upload-action@master
       with:
         aws_key_id: ${{ secrets.PALEWIRE_DOCS_AWS_ACCESS_KEY_ID }}
         aws_secret_access_key: ${{ secrets.PALEWIRE_DOCS_AWS_SECRET_ACCESS_KEY }}
