@@ -3,25 +3,25 @@
 
 # Python Usage
 
-##  First import the library into your Python code.
+First import the library into your Python code.
 
 ```python
 import savepagenow
 ```
 
-## Capture a URL.
+Capture a URL.
 
 ```python
 archive_url = savepagenow.capture("http://www.example.com/")
 ```
 
-## See where it's stored.
+See where it's stored.
 
 ```python
 print(archive_url)
 ```
 
-## Capture a URL with authentication.
+### Authentication.
 
 By default, savepagenow sent anonymous requests. This means that the tool can do four captures per minute.
 
@@ -34,7 +34,7 @@ Then, you can run capture() with the authenticate flag set to true like so:
 archive_url = savepagenow.capture("https://www.example.com/", authenticate=True)
 ```
 
-## CachedPage Exception Handling
+### CachedPage Exception Handling
 
 If a URL has been recently cached, archive.org may return the URL to that page rather than conduct a new capture. When that happens, the ``capture`` method will raise a ``CachedPage`` exception.
 
