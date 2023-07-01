@@ -34,7 +34,7 @@ Then you can run `capture()` with the authenticate flag set to true like so:
 archive_url = savepagenow.capture("https://www.example.com/", authenticate=True)
 ```
 
-### CachedPage Exception Handling
+### Cached pages
 
 If a URL has been recently cached, archive.org may return the URL to that page rather than conduct a new capture. When that happens, the ``capture`` method will raise a ``CachedPage`` exception.
 
