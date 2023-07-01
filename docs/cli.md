@@ -6,7 +6,7 @@
 The Python library is also installed as a command-line interface. You can run it from your terminal like so:
 
 ```bash
-savepagenow
+savepagenow https://example.com/
 ```
 
 The command has the same options as the Python API.
