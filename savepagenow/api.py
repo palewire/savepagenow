@@ -1,11 +1,12 @@
 import typing
 from urllib.parse import urljoin
-
+import os
+import sys
 import click
 import requests
 from requests.utils import parse_header_links
 
-from .exceptions import (
+from exceptions import (
     BadGateway,
     BlockedByRobots,
     CachedPage,
@@ -20,6 +21,7 @@ def capture(
     target_url,
     user_agent="savepagenow (https://github.com/pastpages/savepagenow)",
     accept_cache=False,
+    authenticate=False,
 ):
     """
     Archive the provided URL using archive.org's Wayback Machine.
@@ -31,17 +33,43 @@ def capture(
 
     To silence that exception, pass into True to the ``accept_cache`` keyword
     argument.
+
+    By default, operates in an anonymous, unauthed way.
+    Can mark as authenticate. Must have access_key and secret
+    set as local environment variables to use authenticated requests.
     """
     # Put together the URL that will save our request
     domain = "https://web.archive.org"
     save_url = urljoin(domain, "/save/")
     request_url = save_url + target_url
 
-    # Send the capture request to archive.org
-    headers = {
-        "User-Agent": user_agent,
-    }
-    response = requests.get(request_url, headers=headers)
+    # Access Keys for Internet Archive API
+    if authenticate:
+        if "access_key" in os.environ and "secret" in os.environ:
+            access_key = os.environ["access_key"]
+            secret = os.environ["secret"]
+        else:
+            print(
+                "You have not set your local environment variables access_key" 
+                "and secret in order to use the authenticate flag"
+            )
+            sys.exit(1)
+        authorization = f"LOW {access_key}:{secret}"
+        headers = {
+            "Accept": "application/json",
+            "User-Agent": user_agent,
+            "Authorization": authorization,
+            "Content-Type": "application/x-www-form-urlencoded",
+        }
+        response = requests.get(request_url, headers=headers)
+        if response.status_code == 401:
+            print("Your archive.org access key and/or secret is not valid")
+            sys.exit(1)
+    else:
+        headers = {
+            "User-Agent": user_agent,
+        }
+        response = requests.get(request_url, headers=headers)
 
     # If it has an error header, raise that.
     has_error_header = "X-Archive-Wayback-Runtime-Error" in response.headers
@@ -101,8 +129,8 @@ def capture_or_cache(
     target_url, user_agent="savepagenow (https://github.com/pastpages/savepagenow)"
 ):
     """
-    Archive the provided URL using archive.org's Wayback Machine, unless the page has been recently captured.
-
+    Archive the provided URL using archive.org's Wayback Machine,
+    unless the page has been recently captured.
     Returns a tuple with the archive.org URL where the capture is stored,
     along with a boolean indicating if a new capture was conducted.
 
@@ -120,17 +148,30 @@ def capture_or_cache(
 @click.argument("url")
 @click.option("-ua", "--user-agent", help="User-Agent header for the web request")
 @click.option("-c", "--accept-cache", help="Accept and return cached URL", is_flag=True)
-def cli(url: str, user_agent: typing.Optional[str] = None, accept_cache: bool = False):
+@click.option(
+    "-a",
+    "--authenticate",
+    help="Allows you to run saves with authenication",
+    is_flag=True,
+)
+def cli(
+    url: str,
+    user_agent: typing.Optional[str] = None,
+    accept_cache: bool = False,
+    authenticate: bool = False,
+):
     """
     Archive the provided URL using archive.org's Wayback Machine.
-
-    Raises a CachedPage exception if archive.org declines to conduct a new capture and returns a previous snapshot instead.
+    Raises a CachedPage exception if archive.org declines
+    to conduct a new capture and returns a previous snapshot instead.
     """
     kwargs: typing.Dict[typing.Any, typing.Any] = {}
     if user_agent:
         kwargs["user_agent"] = user_agent
     if accept_cache:
         kwargs["accept_cache"] = accept_cache
+    if authenticate:
+        kwargs["authenticate"] = authenticate
     archive_url = capture(url, **kwargs)
     click.echo(archive_url)
 
