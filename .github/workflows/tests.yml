@@ -31,7 +31,7 @@ jobs:
 
       - id: lint
         name: Lint
-        run: make lint
+        run: pipenv run flake8 ./
 
   mypy-python:
     name: Static type check
@@ -59,7 +59,7 @@ jobs:
 
       - id: mypy
         name: Mypy
-        run: make mypy
+        run: pipenv run mypy ./savepagenow
 
   test-python:
     name: Test Python code
@@ -87,7 +87,7 @@ jobs:
 
       - id: run
         name: Run tests
-        run: make test
+        run: pipenv run pytest tests
 
   test-build:
     name: Build Python package
@@ -116,11 +116,13 @@ jobs:
 
       - id: build
         name: Build release
-        run: make build-release
+        run: |
+          pipenv run python setup.py sdist
+          pipenv run python setup.py bdist_wheel
 
       - id: check
         name: Check release
-        run: make check-release
+        run: pipenv run twine check dist/*
 
       - id: save
         name: Save artifact
