@@ -21,7 +21,7 @@ See where it's stored.
 print(archive_url)
 ```
 
-### Authentication.
+### Authentication
 
 By default, savepagenow sends anonymous requests, which are limited to four captures per minute.
 
