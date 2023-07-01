@@ -6,7 +6,9 @@ from urllib.parse import urljoin
 
 import click
 import requests
-from exceptions import (
+from requests.utils import parse_header_links
+
+from .exceptions import (
     BadGateway,
     BlockedByRobots,
     CachedPage,
@@ -16,7 +18,6 @@ from exceptions import (
     UnknownError,
     WaybackRuntimeError,
 )
-from requests.utils import parse_header_links
 
 DEFAULT_USER_AGENT = "savepagenow (https://github.com/pastpages/savepagenow)"
 
