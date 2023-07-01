@@ -1,11 +1,10 @@
-import typing
-from urllib.parse import urljoin
 import os
 import sys
+import typing
+from urllib.parse import urljoin
+
 import click
 import requests
-from requests.utils import parse_header_links
-
 from exceptions import (
     BadGateway,
     BlockedByRobots,
@@ -15,6 +14,7 @@ from exceptions import (
     UnknownError,
     WaybackRuntimeError,
 )
+from requests.utils import parse_header_links
 
 
 def capture(
@@ -34,9 +34,9 @@ def capture(
     To silence that exception, pass into True to the ``accept_cache`` keyword
     argument.
 
-    By default, operates in an anonymous, unauthed way.
-    Can mark as authenticate. Must have access_key and secret
-    set as local environment variables to use authenticated requests.
+    By default the request is anonymous. Pass the authenticate flag to
+    authenticate the request. It will use the access_key and secret
+    environment variables to authenticate the request.
     """
     # Put together the URL that will save our request
     domain = "https://web.archive.org"
@@ -50,7 +50,7 @@ def capture(
             secret = os.environ["secret"]
         else:
             print(
-                "You have not set your local environment variables access_key" 
+                "You have not set your local environment variables access_key"
                 "and secret in order to use the authenticate flag"
             )
             sys.exit(1)
@@ -129,8 +129,8 @@ def capture_or_cache(
     target_url, user_agent="savepagenow (https://github.com/pastpages/savepagenow)"
 ):
     """
-    Archive the provided URL using archive.org's Wayback Machine,
-    unless the page has been recently captured.
+    Archive the provided URL using archive.org's Wayback Machine, unless the page has been recently captured.
+
     Returns a tuple with the archive.org URL where the capture is stored,
     along with a boolean indicating if a new capture was conducted.
 
@@ -151,7 +151,7 @@ def capture_or_cache(
 @click.option(
     "-a",
     "--authenticate",
-    help="Allows you to run saves with authenication",
+    help="Allows you to run saves with authentication",
     is_flag=True,
 )
 def cli(
@@ -162,8 +162,9 @@ def cli(
 ):
     """
     Archive the provided URL using archive.org's Wayback Machine.
-    Raises a CachedPage exception if archive.org declines
-    to conduct a new capture and returns a previous snapshot instead.
+
+    Raises a CachedPage exception if archive.org declines to
+    conduct a new capture and returns a previous snapshot instead.
     """
     kwargs: typing.Dict[typing.Any, typing.Any] = {}
     if user_agent:
@@ -177,4 +178,4 @@ def cli(
 
 
 if __name__ == "__main__":
-    cli()  # type: ignore
+    cli()
