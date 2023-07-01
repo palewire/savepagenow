@@ -1,8 +1,13 @@
 name: Testing and distribution
+
 on:
   push:
   pull_request:
   workflow_dispatch:
+
+env:
+  SAVEPAGENOW_ACCESS_KEY: ${{ secrets.SAVEPAGENOW_ACCESS_KEY }}
+  SAVEPAGENOW_SECRET_KEY: ${{ secrets.SAVEPAGENOW_SECRET_KEY }}
 
 jobs:
   lint-python:

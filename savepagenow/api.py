@@ -36,11 +36,11 @@ def capture(
     Raises a CachedPage exception if archive.org declines to conduct a new
     capture and returns a previous snapshot instead.
 
-    To silence that exception, pass into True to the ``accept_cache`` keyword
+    To silence that exception, pass into True to the `accept_cache` keyword
     argument.
 
-    By default the request is anonymous. Pass the authenticate flag to
-    authenticate the request. It will use the access_key and secret
+    By default the request is anonymous. Pass the `authenticate` flag to
+    login the request. It will use the `SAVEPAGENOW_ACCESS_KEY` and `SAVEPAGENOW_SECRET_KEY`
     environment variables to authenticate the request.
     """
     # Put together the URL that will save our request
