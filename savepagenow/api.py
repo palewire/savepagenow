@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import os
 import sys
 import typing
@@ -157,7 +159,7 @@ def capture_or_cache(
 )
 def cli(
     url: str,
-    user_agent: typing.Optional[str] = None,
+    user_agent: str | None = None,
     accept_cache: bool = False,
     authenticate: bool = False,
 ):
@@ -167,7 +169,7 @@ def cli(
     Raises a CachedPage exception if archive.org declines to
     conduct a new capture and returns a previous snapshot instead.
     """
-    kwargs: typing.Dict[typing.Any, typing.Any] = {}
+    kwargs: dict[str, typing.Any] = {}
     if user_agent:
         kwargs["user_agent"] = user_agent
     if accept_cache:
