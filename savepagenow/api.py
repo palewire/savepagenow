@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import os
-import sys
 import typing
 from urllib.parse import urljoin
 
@@ -50,19 +49,18 @@ def capture(
 
     # Access Keys for Internet Archive API
     if authenticate:
-        if "access_key" in os.environ and "secret" in os.environ:
-            access_key = os.environ["access_key"]
-            secret = os.environ["secret"]
-        else:
-            print(
-                "You have not set your local environment variables access_key"
-                "and secret in order to use the authenticate flag"
+        access_key = os.getenv("SAVEPAGENOW_ACCESS_KEY")
+        secret_key = os.getenv("SAVEPAGENOW_SECRET_KEY")
+        try:
+            assert access_key and secret_key
+        except AssertionError:
+            raise ValueError(
+                "You must set SAVEPAGENOW_ACCESS_KEY and SAVEPAGENOW_SECRET_KEY environment variables to use the authenticate flag"
             )
-            sys.exit(1)
         headers = {
             "Accept": "application/json",
             "User-Agent": user_agent,
-            "Authorization": f"LOW {access_key}:{secret}",
+            "Authorization": f"LOW {access_key}:{secret_key}",
             "Content-Type": "application/x-www-form-urlencoded",
         }
     else:
