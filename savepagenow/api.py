@@ -19,7 +19,7 @@ from .exceptions import (
     WaybackRuntimeError,
 )
 
-DEFAULT_USER_AGENT = "savepagenow (https://github.com/pastpages/savepagenow)"
+DEFAULT_USER_AGENT = "savepagenow (https://github.com/palewire/savepagenow)"
 
 
 def capture(
