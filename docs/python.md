@@ -23,12 +23,12 @@ print(archive_url)
 
 ### Authentication.
 
-By default, savepagenow sent anonymous requests. This means that the tool can do four captures per minute.
+By default, savepagenow sent anonymous requests, which are limited to four captures per minute.
 
-If you'd like to run authenticated saves, which allows you to do 12 captures per minute,
-set local environment variables ``SAVEPAGENOW_ACCESS_KEY`` and ``SAVEPAGENOW_SECRET_KEY`` to your [Internet Archive credentials](https://archive.org/account/s3.php).
+Authenticated requests are allowed 12 captures per minute. To take advantage of this, you must register an account with [archive.org](https://archive.org/account/login.createaccount.php) and
+set your [API credentials](https://archive.org/account/s3.php) to the local environment variables ``SAVEPAGENOW_ACCESS_KEY`` and ``SAVEPAGENOW_SECRET_KEY``.
 
-Then, you can run capture() with the authenticate flag set to true like so:
+Then you can run `capture()` with the authenticate flag set to true like so:
 
 ```python
 archive_url = savepagenow.capture("https://www.example.com/", authenticate=True)
