@@ -31,7 +31,7 @@ set your [API credentials](https://archive.org/account/s3.php) to the local envi
 Then you can run `capture()` with the authenticate flag set to true like so:
 
 ```python
-archive_url = savepagenow.capture("https://www.example.com/", authenticate=True)
+savepagenow.capture("https://www.example.com/", authenticate=True)
 ```
 
 ### Cached pages
