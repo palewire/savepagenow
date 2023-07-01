@@ -126,7 +126,8 @@ def capture(
 
 
 def capture_or_cache(
-    target_url, user_agent="savepagenow (https://github.com/pastpages/savepagenow)"
+    target_url: str,
+    user_agent: str = "savepagenow (https://github.com/pastpages/savepagenow)",
 ):
     """
     Archive the provided URL using archive.org's Wayback Machine, unless the page has been recently captured.
