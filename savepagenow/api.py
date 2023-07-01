@@ -131,6 +131,7 @@ def capture(
 def capture_or_cache(
     target_url: str,
     user_agent: str = DEFAULT_USER_AGENT,
+    authenticate: bool = False,
 ):
     """
     Archive the provided URL using archive.org's Wayback Machine, unless the page has been recently captured.
@@ -143,9 +144,25 @@ def capture_or_cache(
     in the previous minutes.
     """
     try:
-        return capture(target_url, user_agent=user_agent, accept_cache=False), True
+        return (
+            capture(
+                target_url,
+                user_agent=user_agent,
+                accept_cache=False,
+                authenticate=authenticate,
+            ),
+            True,
+        )
     except CachedPage:
-        return capture(target_url, user_agent=user_agent, accept_cache=True), False
+        return (
+            capture(
+                target_url,
+                user_agent=user_agent,
+                accept_cache=True,
+                authenticate=authenticate,
+            ),
+            False,
+        )
 
 
 @click.command()

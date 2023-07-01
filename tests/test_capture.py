@@ -23,5 +23,5 @@ def test_capture():
 def test_auth_capture():
     """Test the retrieval of URL from Wayback with authentication."""
     url = random.choice(SITE_LIST)
-    archive_url, c = savepagenow.capture(url, authenticate=True)
+    archive_url = savepagenow.capture(url, authenticate=True)
     assert archive_url.startswith("https://web.archive.org/")
