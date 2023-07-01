@@ -18,10 +18,10 @@ from requests.utils import parse_header_links
 
 
 def capture(
-    target_url,
-    user_agent="savepagenow (https://github.com/pastpages/savepagenow)",
-    accept_cache=False,
-    authenticate=False,
+    target_url: str,
+    user_agent: str = "savepagenow (https://github.com/pastpages/savepagenow)",
+    accept_cache: bool = False,
+    authenticate: bool = False,
 ):
     """
     Archive the provided URL using archive.org's Wayback Machine.
