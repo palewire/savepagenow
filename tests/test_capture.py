@@ -10,6 +10,6 @@ def test_capture():
 
 def test_auth_capture():
     """Test the retrieval of URL from Wayback with authentication."""
-    url = "https://www.reuters.com/"
+    url = "https://www.latimes.com/"
     archive_url, c = savepagenow.capture(url, authenticate=True)
     assert archive_url.startswith("https://web.archive.org/")
