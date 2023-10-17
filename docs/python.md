@@ -23,7 +23,7 @@ print(archive_url)
 
 ### Authentication
 
-By default, savepagenow sends anonymous requests, which are limited to 3 captures per minute.
+By default, savepagenow sends anonymous requests, which are limited to three captures per minute.
 
 Authenticated requests are allowed 6 captures per minute. To take advantage of this, you must register an account with [archive.org](https://archive.org/account/login.createaccount.php) and
 set your [API credentials](https://archive.org/account/s3.php) to the local environment variables ``SAVEPAGENOW_ACCESS_KEY`` and ``SAVEPAGENOW_SECRET_KEY``.
