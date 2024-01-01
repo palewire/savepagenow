@@ -1,4 +1,4 @@
-## Links
+### Other resources
 
 - Documentation: [palewi.re/docs/savepagenow/](https://palewi.re/docs/savepagenow/)
 - Save Page Now at archive.org: [archive.org/web](https://archive.org/web)
