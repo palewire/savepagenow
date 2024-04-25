@@ -25,7 +25,8 @@ sphinxcontrib-napoleon = "*"
 types-requests = "*"
 mypy = "*"
 typing-extensions = "*"
-sphinx-click = "*"
+sphinx-palewire-theme = "*"
+
 
 [requires]
 python_version = "3.10"
