@@ -108,7 +108,11 @@ def capture(
         except Exception:
             # If neither of those things works throw this error.
             raise WaybackRuntimeError(
-                dict(status_code=response.status_code, headers=response.headers)
+                dict(
+                    status_code=response.status_code,
+                    headers=response.headers,
+                    content=response.content,
+                )
             )
 
     # Determine if the response was cached
