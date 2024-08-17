@@ -26,6 +26,7 @@ def capture(
     target_url: str,
     user_agent: str = DEFAULT_USER_AGENT,
     accept_cache: bool = False,
+    timeout: int = 120,
     authenticate: bool = False,
 ):
     """
@@ -70,7 +71,7 @@ def capture(
         }
 
     # Make the request
-    response = requests.get(request_url, headers=headers)
+    response = requests.get(request_url, headers=headers, timeout=timeout)
 
     # If it has an error header, raise that.
     has_error_header = "X-Archive-Wayback-Runtime-Error" in response.headers
@@ -135,6 +136,7 @@ def capture(
 def capture_or_cache(
     target_url: str,
     user_agent: str = DEFAULT_USER_AGENT,
+    timeout: int = 120,
     authenticate: bool = False,
 ):
     """
@@ -153,6 +155,7 @@ def capture_or_cache(
                 target_url,
                 user_agent=user_agent,
                 accept_cache=False,
+                timeout=timeout,
                 authenticate=authenticate,
             ),
             True,
@@ -163,6 +166,7 @@ def capture_or_cache(
                 target_url,
                 user_agent=user_agent,
                 accept_cache=True,
+                timeout=timeout,
                 authenticate=authenticate,
             ),
             False,
@@ -173,6 +177,7 @@ def capture_or_cache(
 @click.argument("url")
 @click.option("-ua", "--user-agent", help="User-Agent header for the web request")
 @click.option("-c", "--accept-cache", help="Accept and return cached URL", is_flag=True)
+@click.option("-t", "--timeout", help="How long to wait for a request", default="120")
 @click.option(
     "-a",
     "--authenticate",
@@ -183,6 +188,7 @@ def cli(
     url: str,
     user_agent: str | None = None,
     accept_cache: bool = False,
+    timeout: str = "120",
     authenticate: bool = False,
 ):
     """
@@ -198,6 +204,7 @@ def cli(
         kwargs["accept_cache"] = accept_cache
     if authenticate:
         kwargs["authenticate"] = authenticate
+    kwargs["timeout"] = int(timeout)
     archive_url = capture(url, **kwargs)
     click.echo(archive_url)
 
