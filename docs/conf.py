@@ -22,8 +22,8 @@ copyright = f"{year} palewire"
 exclude_patterns = ["_build"]
 
 html_theme = "palewire"
-html_sidebars = {}
-html_theme_options = {
+html_sidebars: dict[str, str] = {}
+html_theme_options: dict[str, str | bool] = {
     "canonical_url": f"https://palewi.re/docs/{project}/",
     "nosidebar": True,
 }
