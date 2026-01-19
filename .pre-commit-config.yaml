@@ -25,25 +25,12 @@ repos:
     -   id: blacken-docs
         additional_dependencies: [black]
 
--   repo: https://github.com/timothycrosley/isort
-    rev: 7.0.0
+-   repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.14.13
     hooks:
-    -   id: isort
-        args: ["--profile", "black", "--filter-files"]
-
--   repo: https://github.com/pycqa/flake8
-    rev: 7.3.0
-    hooks:
-    - id: flake8
-      additional_dependencies:
-        - flake8-docstrings
-        - flake8-bugbear
-
--   repo: https://github.com/asottile/pyupgrade
-    rev: v3.21.2
-    hooks:
-    -   id: pyupgrade
-        args: [--py37-plus]
+      - id: ruff
+        args: [--fix]
+      - id: ruff-format
 
 -   repo: https://github.com/pre-commit/mirrors-mypy
     rev: 'v1.19.1'  # Use the sha / tag you want to point at
