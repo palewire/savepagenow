@@ -100,13 +100,18 @@ def capture(
         content_location = response.headers["Content-Location"]
         archive_url = domain + content_location
     except KeyError:
-        # If there's not, we  will try to parse out a Link header, which is another style they use.
-        try:
-            # Parse the Link tag in the header, which points to memento URLs in Wayback
-            header_links = parse_header_links(response.headers["Link"])
-            archive_obj = [h for h in header_links if h["rel"] == "memento"][0]
-            archive_url = archive_obj["url"]
-        except Exception:
+        # If there's not, try to parse out a Link header with a prioritized fallback.
+        header_links = parse_header_links(response.headers.get("Link", ""))
+
+        # Prefer memento, then timegate links.
+        archive_url = None
+        for rel in ("memento", "timegate"):
+            match = next((h for h in header_links if h.get("rel") == rel), None)
+            if match and match.get("url"):
+                archive_url = match["url"]
+                break
+
+        if not archive_url:
             # If neither of those things works throw this error.
             raise WaybackRuntimeError(
                 dict(
