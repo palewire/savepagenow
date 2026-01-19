@@ -15,27 +15,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
-      - id: setup-python
-        name: Setup Python
-        uses: actions/setup-python@v5
+      - name: Setup Python
+        uses: actions/setup-python@v7
         with:
-          python-version: '3.10'
+          python-version: '3.13'
           cache: 'pipenv'
 
-      - id: install-pipenv
-        name: Install pipenv
+      - name: Install pipenv
         run: curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python
         shell: bash
 
-      - id: install-python-dependencies
-        name: Install Python dependencies
+      - name: Install Python dependencies
         run: pipenv sync --dev
         shell: bash
 
-      - id: lint
-        name: Lint
+      - name: Lint
         run: pipenv run flake8 ./
 
   mypy-python:
@@ -43,27 +39,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
-      - id: setup-python
-        name: Setup Python
-        uses: actions/setup-python@v5
+      - name: Setup Python
+        uses: actions/setup-python@v7
         with:
-          python-version: '3.10'
+          python-version: '3.13'
           cache: 'pipenv'
 
-      - id: install-pipenv
-        name: Install pipenv
+      - name: Install pipenv
         run: curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python
         shell: bash
 
-      - id: install-python-dependencies
-        name: Install Python dependencies
+      - name: Install Python dependencies
         run: pipenv sync --dev
         shell: bash
 
-      - id: mypy
-        name: Mypy
+      - name: Mypy
         run: pipenv run mypy ./savepagenow
 
   test-python:
@@ -71,27 +63,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
-      - id: setup-python
-        name: Setup Python
-        uses: actions/setup-python@v5
+      - name: Setup Python
+        uses: actions/setup-python@v7
         with:
-          python-version: '3.10'
+          python-version: '3.13'
           cache: 'pipenv'
 
-      - id: install-pipenv
-        name: Install pipenv
+      - name: Install pipenv
         run: curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python
         shell: bash
 
-      - id: install-python-dependencies
-        name: Install Python dependencies
+      - name: Install Python dependencies
         run: pipenv sync --dev
         shell: bash
 
-      - id: run
-        name: Run tests
+      - name: Run tests
         run: pipenv run pytest tests
 
   test-build:
@@ -100,38 +88,30 @@ jobs:
     needs: [test-python]
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
-      - id: setup-python
-        name: Setup Python
-        uses: actions/setup-python@v5
+      - name: Setup Python
+        uses: actions/setup-python@v7
         with:
-          python-version: '3.10'
+          python-version: '3.13'
           cache: 'pipenv'
 
-      - id: install-pipenv
-        name: Install pipenv
+      - name: Install pipenv
         run: curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python
-        shell: bash
 
-      - id: install-python-dependencies
-        name: Install Python dependencies
+      - name: Install Python dependencies
         run: pipenv sync --dev
-        shell: bash
 
-      - id: build
-        name: Build release
+      - name: Build release
         run: |
           pipenv run python setup.py sdist
           pipenv run python setup.py bdist_wheel
 
-      - id: check
-        name: Check release
+      - name: Check release
         run: pipenv run twine check dist/*
 
-      - id: save
-        name: Save artifact
-        uses: actions/upload-artifact@v2
+      - name: Save artifact
+        uses: actions/upload-artifact@v6
         with:
           name: test-release-${{ github.run_number }}
           path: ./dist
@@ -143,18 +123,15 @@ jobs:
     needs: [test-build]
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
     steps:
-      - id: fetch
-        name: Fetch artifact
-        uses: actions/download-artifact@v3
+      - name: Fetch artifact
+        uses: actions/download-artifact@v7
         with:
           name: test-release-${{ github.run_number }}
           path: ./dist
 
-      - id: publish
-        name: Publish release
+      - name: Publish release
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           user: __token__
           password: ${{ secrets.PYPI_API_TOKEN }}
           verbose: true
-          verify_metadata: false
