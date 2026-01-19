@@ -192,11 +192,11 @@
         },
         "backports.tarfile": {
             "hashes": [
-                "sha256:73e0179647803d3726d82e76089d01d8549ceca9bace469953fcb4d97cf2d417",
-                "sha256:9c2ef9696cb73374f7164e17fc761389393ca76777036f5aad42e8b93fcd8009"
+                "sha256:77e284d754527b01fb1e6fa8a1afe577858ebe4e9dad8919e34c862cb399bc34",
+                "sha256:d75e02c268746e1b8144c278978b6e98e85de6ad16f8e4b0844a154557eca991"
             ],
-            "markers": "python_version < '3.12'",
-            "version": "==1.1.1"
+            "markers": "python_version >= '3.8'",
+            "version": "==1.2.0"
         },
         "black": {
             "hashes": [
@@ -638,11 +638,11 @@
         },
         "jaraco.context": {
             "hashes": [
-                "sha256:3e16388f7da43d384a1a7cd3452e72e14732ac9fe459678773a3608a812bf266",
-                "sha256:c2f67165ce1f9be20f32f650f25d8edfc1646a8aeee48ae06fb35f90763576d2"
+                "sha256:129a341b0a85a7db7879e22acd66902fda67882db771754574338898b2d5d86f",
+                "sha256:a43b5ed85815223d0d3cfdb6d7ca0d2bc8946f28f30b6f3216bda070f68badda"
             ],
-            "markers": "python_version >= '3.8'",
-            "version": "==5.3.0"
+            "markers": "python_version >= '3.9'",
+            "version": "==6.1.0"
         },
         "jaraco.functools": {
             "hashes": [
