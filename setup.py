@@ -48,6 +48,7 @@ setup(
     url="https://www.github.com/palewire/savepagenow/",
     packages=("savepagenow",),
     include_package_data=True,
+    package_data={"savepagenow": ["py.typed"]},
     license="MIT",
     install_requires=["requests", "click"],
     entry_points="""
