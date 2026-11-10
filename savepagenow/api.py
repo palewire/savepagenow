@@ -182,7 +182,9 @@ def capture_or_cache(
 @click.argument("url")
 @click.option("-ua", "--user-agent", help="User-Agent header for the web request")
 @click.option("-c", "--accept-cache", help="Accept and return cached URL", is_flag=True)
-@click.option("-t", "--timeout", help="How long to wait for a request", default="120")
+@click.option(
+    "-t", "--timeout", help="How long to wait for a request", type=int, default=120
+)
 @click.option(
     "-a",
     "--authenticate",
@@ -193,7 +195,7 @@ def cli(
     url: str,
     user_agent: str | None = None,
     accept_cache: bool = False,
-    timeout: str = "120",
+    timeout: int = 120,
     authenticate: bool = False,
 ):
     """
@@ -209,7 +211,7 @@ def cli(
         kwargs["accept_cache"] = accept_cache
     if authenticate:
         kwargs["authenticate"] = authenticate
-    kwargs["timeout"] = int(timeout)
+    kwargs["timeout"] = timeout
     archive_url = capture(url, **kwargs)
     click.echo(archive_url)
 

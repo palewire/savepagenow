@@ -1,8 +1,10 @@
 import random
 
 import pytest
+from click.testing import CliRunner
 
 import savepagenow
+from savepagenow.api import cli
 from savepagenow.exceptions import WaybackRuntimeError
 
 SITE_LIST = [
@@ -50,6 +52,13 @@ def test_link_header_fallback_timegate(monkeypatch):
 
     archive_url = savepagenow.capture("https://example.com")
     assert archive_url == "https://web.archive.org/web/https://example.com"
+
+
+def test_cli_rejects_non_integer_timeout():
+    """A non-numeric --timeout is a clean usage error, not a traceback."""
+    result = CliRunner().invoke(cli, ["https://example.com", "-t", "abc"])
+    assert result.exit_code == 2
+    assert "Invalid value" in result.output
 
 
 def test_link_header_fallback_missing(monkeypatch):
